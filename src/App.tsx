@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Canvas } from '@react-three/fiber';
 import Navbar from './components/Navbar';
 import Hero3D from './components/Hero3D';
@@ -7,7 +7,7 @@ import PricingSection from './components/PricingSection';
 import CoverageSection from './components/CoverageSection';
 import FloatingContact from './components/FloatingContact';
 import { Wifi, Zap, Tv, ChevronRight, ShieldCheck, MapPin, Gauge } from 'lucide-react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ContactPage from './components/ContactPage';
 import TvPage from './components/TvPage';
 import './App.css';
@@ -29,7 +29,7 @@ function Home() {
 
         {/* PAGE 1 (0-1): INITIAL HERO - RIGHT */}
         <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div className="animate-fade-in" style={{
+          <div className="animate-fade-in hero-card" style={{
             pointerEvents: 'auto',
             width: '100%',
             maxWidth: '55vw',
@@ -75,9 +75,12 @@ function Home() {
           </div>
         </section>
 
-        {/* PAGE 2 (1-2): OPTICAL LINES FLIGHT - RIGHT */}
+        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
+        <section className="hero-spacer" />
+
+        {/* PAGE 3 (2-3): OPTICAL LINES FLIGHT - RIGHT */}
         <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div style={{
+          <div className="hero-card" style={{
             pointerEvents: 'auto',
             width: '100%',
             maxWidth: '430px',
@@ -104,9 +107,12 @@ function Home() {
           </div>
         </section>
 
-        {/* PAGE 3 (2-3): TRANSMITTER TOWER - LEFT */}
+        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
+        <section className="hero-spacer" />
+
+        {/* PAGE 5 (4-5): TRANSMITTER TOWER - LEFT */}
         <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div style={{
+          <div className="hero-card" style={{
             pointerEvents: 'auto',
             width: '100%',
             maxWidth: '430px',
@@ -133,9 +139,12 @@ function Home() {
           </div>
         </section>
 
-        {/* PAGE 4 (3-4): ADMIN BUILDING - RIGHT */}
+        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
+        <section className="hero-spacer" />
+
+        {/* PAGE 7 (6-7): ADMIN BUILDING - RIGHT */}
         <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div style={{
+          <div className="hero-card" style={{
             pointerEvents: 'auto',
             width: '100%',
             maxWidth: '430px',
@@ -168,7 +177,10 @@ function Home() {
           </div>
         </section>
 
-        {/* PAGE 5 & 6 (4-6): STANDARD PAGE CONTENT OVERLAID ON 3D SCENE */}
+        {/* SPACER - FINAL 3D OVERVIEW (mobile only) */}
+        <section className="hero-spacer" />
+
+        {/* PAGE 9+ (8+): STANDARD PAGE CONTENT OVERLAID ON 3D SCENE */}
         <div style={{ minHeight: '100vh', background: 'var(--bg-surface-light)', pointerEvents: 'auto', position: 'relative', zIndex: 10 }}>
 
           {/* Services Section */}

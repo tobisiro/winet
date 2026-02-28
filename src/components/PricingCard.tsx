@@ -33,7 +33,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
   const currentMontaz = withViazanost ? montazViazanost : montazBezViazanosti;
 
   return (
-    <div style={{
+    <div className="pricing-card" style={{
       background: isPopular ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.03)',
       backdropFilter: 'blur(10px)',
       border: isPopular ? '2px solid rgba(255, 107, 0, 0.5)' : '1px solid rgba(255, 255, 255, 0.08)',

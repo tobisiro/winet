@@ -478,9 +478,12 @@ function CameraController() {
 
     useEffect(() => {
         const handleScroll = () => {
-            // We only want the camera to interpolate over the first 4 screens (the transparent sections).
-            // After 400vh, the camera should remain fully fixed at t=1.0.
-            const maxScroll = window.innerHeight * 4;
+            // Detect if spacers are visible (mobile) by checking the first one's computed height
+            const spacer = document.querySelector('.hero-spacer') as HTMLElement | null;
+            const spacersVisible = spacer ? spacer.offsetHeight > 0 : false;
+            // On desktop: 4 card sections. On mobile: 4 cards + 4 spacers = 8 sections.
+            const numScreens = spacersVisible ? 8 : 4;
+            const maxScroll = window.innerHeight * numScreens;
             if (maxScroll <= 0) {
                 setScrollT(0);
                 return;
@@ -490,9 +493,13 @@ function CameraController() {
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('resize', handleScroll); // recalc on resize
         handleScroll(); // Init
 
-        return () => window.removeEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
+        };
     }, []);
 
     useFrame((state) => {

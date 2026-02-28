@@ -131,6 +131,55 @@ img {
   padding: 6rem 0;
 }
 
+/* Hero spacers: hidden on desktop, visible on mobile */
+.hero-spacer {
+  display: none;
+  pointer-events: none;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-spacer {
+    display: block;
+    height: 100vh;
+  }
+
+  .hero-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 1.5rem !important;
+    border-radius: 20px !important;
+  }
+
+  .pricing-card {
+    transform: scale(1) !important;
+    padding: 1.5rem !important;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .coverage-grid {
+    grid-template-columns: 1fr !important;
+    padding: 1.5rem !important;
+  }
+
+  .coverage-section {
+    padding: 4rem 1rem !important;
+  }
+
+  .coverage-map-container {
+    padding: 0.5rem !important;
+    border-radius: 16px !important;
+  }
+
+  .section-padding {
+    padding: 3rem 0;
+  }
+}
+
 /* SledovanieTV Plugin CSS Overrides / Resets */
 /* Prevent our global app styles from breaking the third-party plugin layout */
 #m-plugin .btn {

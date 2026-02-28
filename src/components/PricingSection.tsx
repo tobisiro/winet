@@ -103,7 +103,7 @@ const PricingSection: React.FC = () => {
         <section id="cennik" className="section-padding" style={{ background: 'var(--bg-dark)', position: 'relative' }}>
             <div className="container">
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                    <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Nekompromisné domáce pripojenie</h2>
+                    <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', marginBottom: '1rem', color: 'var(--text-primary)' }}>Nekompromisné domáce pripojenie</h2>
                     <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
                         Vyberte si spomedzi našich najvýhodnejších balíkov. Či už je to stabilná optika alebo flexibilná wifi technológia.
                     </p>
@@ -184,9 +184,9 @@ const PricingSection: React.FC = () => {
                 </div>
 
                 {/* Cards Grid */}
-                <div style={{
+                <div className="pricing-grid" style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                     gap: '2rem',
                     maxWidth: '1200px',
                     margin: '0 auto'
