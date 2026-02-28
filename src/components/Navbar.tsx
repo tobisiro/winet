@@ -28,10 +28,10 @@ export default function Navbar() {
                 {/* Desktop Links */}
                 <div style={{ display: 'none' }} className="desktop-menu">
                     <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', fontWeight: 500 }}>
-                        <a href="/#sluzby" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Služby</a>
-                        <a href="/#cennik" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Cenník</a>
-                        <a href="/#pokrytie" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Pokrytie</a>
-                        <a href="/#vyhody" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Prečo my?</a>
+                        <Link to="/#sluzby" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Služby</Link>
+                        <Link to="/#cennik" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Cenník</Link>
+                        <Link to="/#pokrytie" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Pokrytie</Link>
+                        <Link to="/#vyhody" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Prečo my?</Link>
                         <Link to="/kontakt" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Kontakt</Link>
                         <a href="http://mail.websupport.sk" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>WebMail</a>
                         <Link to="/televizia" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Televízia</Link>
@@ -62,10 +62,10 @@ export default function Navbar() {
                     gap: '1rem',
                     boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
                 }}>
-                    <a href="/#sluzby" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Služby</a>
-                    <a href="/#cennik" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník</a>
-                    <a href="/#pokrytie" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Pokrytie</a>
-                    <a href="/#vyhody" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Prečo my?</a>
+                    <Link to="/#sluzby" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Služby</Link>
+                    <Link to="/#cennik" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník</Link>
+                    <Link to="/#pokrytie" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Pokrytie</Link>
+                    <Link to="/#vyhody" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Prečo my?</Link>
                     <Link to="/kontakt" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Kontakt</Link>
                     <a href="http://mail.websupport.sk" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>WebMail</a>
                     <Link to="/televizia" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Televízia</Link>
