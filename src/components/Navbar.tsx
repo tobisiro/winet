@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Menu, X, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     return (
         <nav
@@ -22,34 +14,27 @@ export default function Navbar() {
                 right: 0,
                 zIndex: 50,
                 transition: 'all 0.3s ease',
-                background: isScrolled ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
-                backdropFilter: isScrolled ? 'blur(12px)' : 'none',
-                borderBottom: isScrolled ? '1px solid rgba(0, 0, 0, 0.05)' : '1px solid transparent',
-                padding: '1rem 0',
-                boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.05)' : 'none'
+                background: 'transparent',
+                borderBottom: 'none',
+                padding: '1rem 0'
             }}
         >
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-
                 {/* Logo */}
-                <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <img
-                        src="/logo.png"
-                        alt="WI-NET"
-                        style={{
-                            height: '48px',
-                            width: 'auto',
-                            objectFit: 'contain'
-                        }}
-                    />
-                </a>
+                <Link to="/" style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-1.5px', textDecoration: 'none' }}>
+                    winet<span style={{ color: 'var(--primary)' }}>.sk</span>
+                </Link>
 
                 {/* Desktop Links */}
                 <div style={{ display: 'none' }} className="desktop-menu">
                     <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', fontWeight: 500 }}>
-                        <a href="#sluzby" style={{ color: 'var(--text-secondary)' }} onMouseOver={e => e.target.style.color = 'var(--primary)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}>Služby</a>
-                        <a href="#vyhody" style={{ color: 'var(--text-secondary)' }} onMouseOver={e => e.target.style.color = 'var(--primary)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}>Prečo my?</a>
-                        <a href="#kontakt" style={{ color: 'var(--text-secondary)' }} onMouseOver={e => e.target.style.color = 'var(--primary)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}>Kontakt</a>
+                        <a href="/#sluzby" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Služby</a>
+                        <a href="/#cennik" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Cenník</a>
+                        <a href="/#pokrytie" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Pokrytie</a>
+                        <a href="/#vyhody" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Prečo my?</a>
+                        <Link to="/kontakt" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Kontakt</Link>
+                        <a href="http://mail.websupport.sk" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>WebMail</a>
+                        <Link to="/televizia" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Televízia</Link>
                         <a href="http://klient.winet.sk" className="btn btn-outline" style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}>
                             Klientska zóna
                         </a>
@@ -77,10 +62,14 @@ export default function Navbar() {
                     gap: '1rem',
                     boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
                 }}>
-                    <a href="#sluzby" onClick={() => setMobileMenuOpen(false)}>Služby</a>
-                    <a href="#vyhody" onClick={() => setMobileMenuOpen(false)}>Prečo my?</a>
-                    <a href="#kontakt" onClick={() => setMobileMenuOpen(false)}>Kontakt</a>
-                    <a href="http://klient.winet.sk" style={{ color: 'var(--primary)', fontWeight: 'bold' }}>Klientska zóna <ChevronRight size={16} style={{ display: 'inline', verticalAlign: 'middle' }} /></a>
+                    <a href="/#sluzby" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Služby</a>
+                    <a href="/#cennik" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník</a>
+                    <a href="/#pokrytie" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Pokrytie</a>
+                    <a href="/#vyhody" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Prečo my?</a>
+                    <Link to="/kontakt" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Kontakt</Link>
+                    <a href="http://mail.websupport.sk" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>WebMail</a>
+                    <Link to="/televizia" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Televízia</Link>
+                    <a href="http://klient.winet.sk" style={{ color: 'var(--primary)', fontWeight: 'bold', textDecoration: 'none', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '1rem', marginTop: '0.5rem' }}>Klientska zóna <ChevronRight size={16} style={{ display: 'inline', verticalAlign: 'middle' }} /></a>
                 </div>
             )}
             <style dangerouslySetInnerHTML={{

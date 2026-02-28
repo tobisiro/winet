@@ -32,6 +32,11 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+}
+
 h1,
 h2,
 h3,
@@ -124,4 +129,90 @@ img {
 
 .section-padding {
   padding: 6rem 0;
+}
+
+/* SledovanieTV Plugin CSS Overrides / Resets */
+/* Prevent our global app styles from breaking the third-party plugin layout */
+#m-plugin .btn {
+  display: flex !important;
+  /* Changed from inline-block */
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: normal !important;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  gap: 0;
+  font-family: inherit;
+  width: 100% !important;
+  /* Force button to respect container width */
+  max-width: 100%;
+  height: auto;
+  min-height: 40px;
+  /* Ensure minimum touch target size and prevent squishing vertically */
+  box-sizing: border-box;
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  word-wrap: break-word;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Override the internal flex container of the SledovanieTV add-on package cards to allow vertical stacking if needed */
+#m-plugin .flex-wrap {
+  flex-direction: column !important;
+  gap: 1rem !important;
+  align-items: stretch !important;
+}
+
+#m-plugin .flex-1.flex.flex-col {
+  justify-content: space-between !important;
+}
+
+/* Ensure the wrapper of the button doesn't force a tiny width */
+#m-plugin [class*="w-"] {
+  max-width: 100% !important;
+}
+
+#m-plugin .btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+#m-plugin .btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+#m-plugin .btn-primary {
+  color: #fff;
+  background-color: var(--primary);
+  /* Keep it slightly themed but normal shape */
+  border-color: var(--primary-hover);
+  box-shadow: none;
+}
+
+#m-plugin .btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  box-shadow: none;
+}
+
+#m-plugin .btn:hover {
+  transform: none;
+  box-shadow: none;
 }
