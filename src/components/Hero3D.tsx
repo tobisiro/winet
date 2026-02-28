@@ -307,7 +307,7 @@ function TransmitterTower({ position, rotation = [0, 0, 0], height = 7 }: { posi
 
     // Materials (minimalist matte white/silver)
     const towerMat = <meshStandardMaterial color="#F8FAFC" roughness={0.3} metalness={0.2} />;
-    const lightOrangeMat = <meshBasicMaterial color="#f97316" />; // subtle orange for top
+    const swanLightMat = <meshBasicMaterial color="#70489D" />; // SWAN purple for top
 
     const getMatForLevel = (_l: number) => towerMat;
 
@@ -404,8 +404,8 @@ function TransmitterTower({ position, rotation = [0, 0, 0], height = 7 }: { posi
             </Box>
 
             {/* Blinking Top Light */}
-            <Sphere args={[0.08, 6, 6]} position={[0, height + 2.1, 0]}>
-                {lightOrangeMat}
+            <Sphere args={[0.1, 8, 8]} position={[0, height + 2.1, 0]}>
+                {swanLightMat}
             </Sphere>
         </group>
     );
@@ -784,7 +784,7 @@ export default function Hero3D() {
             <fog attach="fog" args={['#F8FAFC', 20, 70]} />
             <ambientLight intensity={1.2} />
             <directionalLight position={[20, 30, 10]} intensity={1.8} color="#ffffff" castShadow />
-            <pointLight position={[-10, 10, -5]} intensity={0.6} color="#0ea5e9" />
+            <pointLight position={[-10, 10, -5]} intensity={0.6} color="#70489D" />
 
             <CameraController />
 
@@ -819,8 +819,8 @@ export default function Hero3D() {
                     const points = curve.getPoints(8);
                     return (
                         <group key={`building-cable-${idx}`}>
-                            <Line points={points} color="#CBD5E1" lineWidth={1.5} />
-                            <DataPulse curve={curve} speed={1.5} color="#0ea5e9" delay={idx * 0.2 + 0.1} />
+                            <Line points={points} color="#A78BFA" lineWidth={1.5} />
+                            <DataPulse curve={curve} speed={1.5} color="#70489D" delay={idx * 0.2 + 0.1} />
                             <DataPulse curve={curve} speed={2} color="#f97316" delay={idx * 0.4 + 0.6} />
                         </group>
                     );
@@ -831,8 +831,8 @@ export default function Hero3D() {
                     const points = curve.getPoints(8); // Lower point count for lines
                     return (
                         <group key={`cable-${idx}`}>
-                            <Line points={points} color="#CBD5E1" lineWidth={1.5} />
-                            <DataPulse curve={curve} speed={1.5} color="#0ea5e9" delay={idx * 0.2} />
+                            <Line points={points} color="#A78BFA" lineWidth={1.5} />
+                            <DataPulse curve={curve} speed={1.5} color="#70489D" delay={idx * 0.2} />
                             <DataPulse curve={curve} speed={2} color="#f97316" delay={idx * 0.4 + 0.5} />
                         </group>
                     );
@@ -848,7 +848,7 @@ export default function Hero3D() {
                         start={new THREE.Vector3(towerPos.x, towerPos.y + towerHeight + 1, towerPos.z)}
                         end={new THREE.Vector3(adminBuildingPos.x, adminBuildingPos.y + 8.7, adminBuildingPos.z)} // Target admin roof origin
                         speed={1.0}
-                        color="#3B82F6" // Blue ping
+                        color="#70489D" // Purple ping
                         delay={i * 1.5}
                         pulseSize={0.25}
                     />
@@ -877,7 +877,7 @@ export default function Hero3D() {
                             {/* Drop cable to house 1 */}
                             <group>
                                 <Line points={dropPath.getPoints(40)} color="#1E293B" lineWidth={1.5} />
-                                <DataPulse curve={dropPath} speed={1.5} color="#3B82F6" delay={0.2} />
+                                <DataPulse curve={dropPath} speed={1.5} color="#70489D" delay={0.2} />
                                 <DataPulse curve={dropPath} speed={1.5} color="#f97316" delay={1.2} />
                             </group>
 
@@ -889,7 +889,7 @@ export default function Hero3D() {
                                     // To house 2 receiver
                                     end={new THREE.Vector3(house2Pos.x, house2Pos.y + 2.05, house2Pos.z)}
                                     speed={1.2}
-                                    color="#0ea5e9"
+                                    color="#70489D"
                                     delay={i * 0.6}
                                     pulseSize={0.2}
                                 />

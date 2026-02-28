@@ -72,20 +72,20 @@ function Home() {
               display: 'inline-block',
               alignSelf: 'flex-start',
               padding: '0.4rem 1rem',
-              background: 'rgba(255,107,0,0.15)',
-              color: 'var(--primary)',
+              background: 'rgba(112,72,157,0.15)',
+              color: 'var(--swan)',
               borderRadius: '99px',
               fontWeight: 700,
               fontSize: '0.85rem',
               marginBottom: '1.5rem',
-              border: '1px solid rgba(255,107,0,0.3)',
+              border: '1px solid rgba(112,72,157,0.3)',
               textTransform: 'uppercase',
               letterSpacing: '1px'
             }}>
               Prémium Internet Provider
             </div>
             <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', marginBottom: '1.2rem', letterSpacing: '-1px', color: 'var(--text-primary)', lineHeight: 1.1 }}>
-              Rýchlosť, kvalita a <br /><span className="text-primary-gradient">stabilita.</span>
+              Rýchlosť, kvalita a <br /><span className="text-brand-gradient">stabilita.</span>
             </h1>
             <p style={{ fontSize: '1.05rem', color: '#1E293B', marginBottom: '2rem', lineHeight: 1.6, fontWeight: 500 }}>
               Vaše pripojenie k svetu začína u nás. Ako stabilný lokálny poskytovateľ (ISP) pokrývame viac ako 150 miest a obcí východného Slovenska už viac ako 11 rokov.
@@ -306,7 +306,7 @@ function Home() {
                 </div>
 
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ width: '80px', height: '80px', margin: '0 auto 1.5rem auto', background: 'rgba(255, 107, 0, 0.1)', borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
+                  <div style={{ width: '80px', height: '80px', margin: '0 auto 1.5rem auto', background: 'rgba(112, 72, 157, 0.1)', borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--swan)' }}>
                     <ShieldCheck size={40} />
                   </div>
                   <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Kvalitné pripojenie</h3>
