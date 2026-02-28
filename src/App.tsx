@@ -10,6 +10,7 @@ import { Wifi, Zap, Tv, ChevronRight, ShieldCheck, MapPin, Gauge } from 'lucide-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ContactPage from './components/ContactPage';
 import TvPage from './components/TvPage';
+import InternetPage from './components/InternetPage';
 import './App.css';
 
 function Home() {
@@ -333,6 +334,7 @@ function App() {
     <Router basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/internet" element={<InternetPage />} />
         <Route path="/kontakt" element={<ContactPage />} />
         <Route path="/televizia" element={<TvPage />} />
       </Routes>

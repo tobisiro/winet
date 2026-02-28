@@ -93,8 +93,8 @@ const WIFI_PLANS = [
     }
 ];
 
-const PricingSection: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<'optika' | 'wifi'>('optika');
+const PricingSection: React.FC<{ defaultTab?: 'optika' | 'wifi' }> = ({ defaultTab = 'optika' }) => {
+    const [activeTab, setActiveTab] = useState<'optika' | 'wifi'>(defaultTab);
     const [withViazanost, setWithViazanost] = useState<boolean>(true);
 
     const currentPlans = activeTab === 'optika' ? OPTIKA_PLANS : WIFI_PLANS;

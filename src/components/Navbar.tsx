@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [internetDropdownOpen, setInternetDropdownOpen] = useState(false);
 
     return (
         <nav
@@ -27,15 +28,104 @@ export default function Navbar() {
 
                 {/* Desktop Links */}
                 <div style={{ display: 'none' }} className="desktop-menu">
-                    <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', fontWeight: 500 }}>
-                        <Link to="/#sluzby" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Služby</Link>
-                        <Link to="/#cennik" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Cenník</Link>
-                        <Link to="/#pokrytie" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Pokrytie</Link>
-                        <Link to="/#vyhody" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Prečo my?</Link>
-                        <Link to="/kontakt" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Kontakt</Link>
-                        <a href="http://mail.websupport.sk" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>WebMail</a>
+                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', fontWeight: 500 }}>
+
+                        {/* Internet Dropdown */}
+                        <div
+                            style={{ position: 'relative' }}
+                            onMouseEnter={() => setInternetDropdownOpen(true)}
+                            onMouseLeave={() => setInternetDropdownOpen(false)}
+                        >
+                            <button
+                                style={{
+                                    display: 'flex', alignItems: 'center', gap: '0.3rem',
+                                    color: 'var(--text-secondary)', background: 'none', border: 'none',
+                                    cursor: 'pointer', fontWeight: 500, fontSize: 'inherit',
+                                    fontFamily: 'inherit', padding: 0,
+                                    transition: 'color 0.2s'
+                                }}
+                                onMouseOver={e => (e.currentTarget.style.color = 'var(--primary)')}
+                                onMouseOut={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
+                            >
+                                Internet <ChevronDown size={16} />
+                            </button>
+
+                            {internetDropdownOpen && (
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '100%',
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    paddingTop: '0.5rem',
+                                    minWidth: '200px',
+                                    zIndex: 100
+                                }}>
+                                    <div style={{
+                                        background: 'rgba(255,255,255,0.95)',
+                                        backdropFilter: 'blur(12px)',
+                                        WebkitBackdropFilter: 'blur(12px)',
+                                        borderRadius: '16px',
+                                        boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+                                        border: '1px solid rgba(0,0,0,0.06)',
+                                        padding: '0.5rem',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: '0.25rem'
+                                    }}>
+                                        <Link
+                                            to="/internet?tab=optika"
+                                            style={{
+                                                display: 'flex', alignItems: 'center', gap: '0.5rem',
+                                                padding: '0.75rem 1rem',
+                                                color: 'var(--text-primary)',
+                                                textDecoration: 'none',
+                                                borderRadius: '12px',
+                                                transition: 'background 0.2s',
+                                                fontSize: '0.95rem'
+                                            }}
+                                            onMouseOver={e => (e.currentTarget.style.background = 'rgba(255,107,0,0.08)')}
+                                            onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
+                                        >
+                                            <span style={{ fontSize: '1.1rem' }}>⚡</span>
+                                            Optické programy
+                                        </Link>
+                                        <Link
+                                            to="/internet?tab=wifi"
+                                            style={{
+                                                display: 'flex', alignItems: 'center', gap: '0.5rem',
+                                                padding: '0.75rem 1rem',
+                                                color: 'var(--text-primary)',
+                                                textDecoration: 'none',
+                                                borderRadius: '12px',
+                                                transition: 'background 0.2s',
+                                                fontSize: '0.95rem'
+                                            }}
+                                            onMouseOver={e => (e.currentTarget.style.background = 'rgba(56,189,248,0.08)')}
+                                            onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
+                                        >
+                                            <span style={{ fontSize: '1.1rem' }}>📡</span>
+                                            WiFi programy
+                                        </Link>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
                         <Link to="/televizia" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Televízia</Link>
-                        <a href="http://klient.winet.sk" className="btn btn-outline" style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}>
+                        <Link to="/#pokrytie" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Pokrytie</Link>
+                        <Link to="/kontakt" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Kontakt</Link>
+
+                        <a
+                            href="http://klient.winet.sk"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="btn btn-primary"
+                            style={{
+                                fontSize: '0.85rem',
+                                padding: '0.5rem 1.2rem',
+                                boxShadow: '0 4px 12px rgba(255,107,0,0.25)'
+                            }}
+                        >
                             Klientska zóna
                         </a>
                     </div>
@@ -56,20 +146,51 @@ export default function Navbar() {
                     right: 0,
                     background: 'var(--bg-dark)',
                     borderBottom: '1px solid var(--glass-border)',
-                    padding: '1rem',
+                    padding: '1rem 1.5rem',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '1rem',
+                    gap: '0.25rem',
                     boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
                 }}>
-                    <Link to="/#sluzby" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Služby</Link>
-                    <Link to="/#cennik" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník</Link>
-                    <Link to="/#pokrytie" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Pokrytie</Link>
-                    <Link to="/#vyhody" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Prečo my?</Link>
-                    <Link to="/kontakt" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Kontakt</Link>
-                    <a href="http://mail.websupport.sk" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>WebMail</a>
-                    <Link to="/televizia" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Televízia</Link>
-                    <a href="http://klient.winet.sk" style={{ color: 'var(--primary)', fontWeight: 'bold', textDecoration: 'none', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '1rem', marginTop: '0.5rem' }}>Klientska zóna <ChevronRight size={16} style={{ display: 'inline', verticalAlign: 'middle' }} /></a>
+                    {/* Internet sub-group */}
+                    <div style={{ color: 'var(--text-secondary)', fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', padding: '0.75rem 0 0.25rem', opacity: 0.5 }}>
+                        Internet
+                    </div>
+                    <Link to="/internet?tab=optika" onClick={() => setMobileMenuOpen(false)} style={{
+                        color: 'var(--text-primary)', textDecoration: 'none', padding: '0.6rem 0 0.6rem 0.75rem',
+                        display: 'flex', alignItems: 'center', gap: '0.5rem',
+                        borderLeft: '2px solid var(--primary)'
+                    }}>
+                        <span>⚡</span> Optické programy
+                    </Link>
+                    <Link to="/internet?tab=wifi" onClick={() => setMobileMenuOpen(false)} style={{
+                        color: 'var(--text-primary)', textDecoration: 'none', padding: '0.6rem 0 0.6rem 0.75rem',
+                        display: 'flex', alignItems: 'center', gap: '0.5rem',
+                        borderLeft: '2px solid #38BDF8'
+                    }}>
+                        <span>📡</span> WiFi programy
+                    </Link>
+
+                    <div style={{ height: '1px', background: 'rgba(0,0,0,0.06)', margin: '0.5rem 0' }} />
+
+                    <Link to="/televizia" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-primary)', textDecoration: 'none', padding: '0.6rem 0' }}>Televízia</Link>
+                    <Link to="/#pokrytie" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-primary)', textDecoration: 'none', padding: '0.6rem 0' }}>Pokrytie</Link>
+                    <Link to="/kontakt" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-primary)', textDecoration: 'none', padding: '0.6rem 0' }}>Kontakt</Link>
+
+                    <div style={{ height: '1px', background: 'rgba(0,0,0,0.06)', margin: '0.5rem 0' }} />
+
+                    <a href="http://klient.winet.sk" target="_blank" rel="noreferrer" style={{
+                        color: 'white',
+                        background: 'var(--primary)',
+                        textDecoration: 'none',
+                        padding: '0.75rem 1rem',
+                        borderRadius: '12px',
+                        fontWeight: 700,
+                        textAlign: 'center',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
+                    }}>
+                        Klientska zóna <ChevronRight size={16} />
+                    </a>
                 </div>
             )}
             <style dangerouslySetInnerHTML={{
