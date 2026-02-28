@@ -521,9 +521,9 @@ function CameraController() {
             // VP1: Hero – Admin building
             let p = t / 0.167;
             p = snapProgress(p);
-            const p1Pos = new THREE.Vector3(28, 8, 5);
+            const p1Pos = new THREE.Vector3(41.6, 11.0, 6.8);
             const p1Look = new THREE.Vector3(5, 3, 2);
-            const p2Pos = new THREE.Vector3(20, 6, -5);
+            const p2Pos = new THREE.Vector3(33.1, 8.6, -9.4);
             const p2Look = new THREE.Vector3(5, 3, 0);
 
             targetPos.lerpVectors(p1Pos, p2Pos, p);
@@ -532,9 +532,9 @@ function CameraController() {
             // VP2: Fiber intro – pole line
             let p = (t - 0.167) / 0.166;
             p = snapProgress(p);
-            const p2Pos = new THREE.Vector3(20, 6, -5);
+            const p2Pos = new THREE.Vector3(33.1, 8.6, -9.4);
             const p2Look = new THREE.Vector3(5, 3, 0);
-            const p3Pos = new THREE.Vector3(5, 3.5, -12);
+            const p3Pos = new THREE.Vector3(18.0, 4.2, -17.2);
             const p3Look = new THREE.Vector3(-5, 3, -8);
 
             targetPos.lerpVectors(p2Pos, p3Pos, p);
@@ -543,9 +543,9 @@ function CameraController() {
             // VP3: Cable detail close-up
             let p = (t - 0.333) / 0.167;
             p = snapProgress(p);
-            const p3Pos = new THREE.Vector3(5, 3.5, -12);
+            const p3Pos = new THREE.Vector3(18.0, 4.2, -17.2);
             const p3Look = new THREE.Vector3(-5, 3, -8);
-            const p4Pos = new THREE.Vector3(-8, 3, -10);
+            const p4Pos = new THREE.Vector3(3.3, 1.4, -18.1);
             const p4Look = new THREE.Vector3(-15, 4, -5);
 
             targetPos.lerpVectors(p3Pos, p4Pos, p);
@@ -554,9 +554,9 @@ function CameraController() {
             // VP4: Transmitter tower
             let p = (t - 0.5) / 0.167;
             p = snapProgress(p);
-            const p4Pos = new THREE.Vector3(-8, 3, -10);
+            const p4Pos = new THREE.Vector3(3.3, 1.4, -18.1);
             const p4Look = new THREE.Vector3(-15, 4, -5);
-            const p5Pos = new THREE.Vector3(-22, 4, -2);
+            const p5Pos = new THREE.Vector3(-25.8, 3.0, -15.4);
             const p5Look = new THREE.Vector3(-18, 5, 12);
 
             targetPos.lerpVectors(p4Pos, p5Pos, p);
@@ -565,9 +565,9 @@ function CameraController() {
             // VP5: Houses/village
             let p = (t - 0.667) / 0.166;
             p = snapProgress(p);
-            const p5Pos = new THREE.Vector3(-22, 4, -2);
+            const p5Pos = new THREE.Vector3(-25.8, 3.0, -15.4);
             const p5Look = new THREE.Vector3(-18, 5, 12);
-            const p6Pos = new THREE.Vector3(8, 4, -14);
+            const p6Pos = new THREE.Vector3(16.1, 8.0, -24.7);
             const p6Look = new THREE.Vector3(2, 1, -6);
 
             targetPos.lerpVectors(p5Pos, p6Pos, p);
@@ -576,23 +576,14 @@ function CameraController() {
             // VP6: Final zoom – house detail
             let p = Math.min((t - 0.833) / 0.167, 1.0);
             p = snapProgress(p);
-            const p6Pos = new THREE.Vector3(8, 4, -14);
+            const p6Pos = new THREE.Vector3(16.1, 8.0, -24.7);
             const p6Look = new THREE.Vector3(2, 1, -6);
-            const p7Pos = new THREE.Vector3(4, 2.5, -10);
+            const p7Pos = new THREE.Vector3(13.3, 7.2, -19.3);
             const p7Look = new THREE.Vector3(2, 1.5, -8);
 
             targetPos.lerpVectors(p6Pos, p7Pos, p);
             targetLookAt.lerpVectors(p6Look, p7Look, p);
         }
-
-        // On mobile, pull camera further back to show more of the scene
-        if (isMobile) {
-            // const dir = new THREE.Vector3().subVectors(targetPos, targetLookAt).normalize();
-            // targetPos.addScaledVector(dir, 14);
-        }
-
-        const dir = new THREE.Vector3().subVectors(targetPos, targetLookAt).normalize();
-        targetPos.addScaledVector(dir, 14);
 
         // Smoother lerp for cinematic feel
         state.camera.position.lerp(targetPos, 0.08);

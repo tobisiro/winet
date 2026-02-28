@@ -8,7 +8,7 @@ import PricingSection from './components/PricingSection';
 import CoverageSection from './components/CoverageSection';
 import FloatingContact from './components/FloatingContact';
 import Footer from './components/Footer';
-import { Wifi, Zap, Tv, ChevronRight, ChevronDown, ShieldCheck, MapPin, Gauge } from 'lucide-react';
+import { Wifi, Zap, Tv, ChevronRight, ShieldCheck, MapPin, Gauge } from 'lucide-react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import ContactPage from './components/ContactPage';
 import TvPage from './components/TvPage';
@@ -97,21 +97,7 @@ function Home() {
             </div>
           </div>
           {/* Scroll Indicator */}
-          <div className="scroll-indicator" style={{
-            position: 'absolute',
-            bottom: '2rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '0.5rem',
-            pointerEvents: 'none',
-            color: 'rgba(15, 23, 42, 0.5)'
-          }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px' }}>Scrollujte</span>
-            <ChevronDown size={24} />
-          </div>
+
         </section>
 
         {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
