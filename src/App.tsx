@@ -1,6 +1,5 @@
-
 import { Canvas } from '@react-three/fiber';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero3D from './components/Hero3D';
 import ServiceCard from './components/ServiceCard';
@@ -8,7 +7,7 @@ import PricingSection from './components/PricingSection';
 import CoverageSection from './components/CoverageSection';
 import FloatingContact from './components/FloatingContact';
 import Footer from './components/Footer';
-import { Wifi, Zap, Tv, ChevronRight, ShieldCheck, MapPin, Gauge } from 'lucide-react';
+import { Wifi, Zap, Tv, ChevronRight, ShieldCheck, MapPin, Gauge, Orbit, X } from 'lucide-react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import ContactPage from './components/ContactPage';
 import TvPage from './components/TvPage';
@@ -17,6 +16,8 @@ import './App.css';
 
 function Home() {
   const scrollRevealRef = useRef<HTMLDivElement>(null);
+  const [isExploreMode, setIsExploreMode] = useState(false);
+  const [showExploreButton, setShowExploreButton] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,21 +34,84 @@ function Home() {
     const elements = document.querySelectorAll('.scroll-reveal');
     elements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      const sluzby = document.getElementById('sluzby');
+      if (sluzby) {
+        // If the #sluzby section has scrolled into the viewport, hide the explore button
+        const rect = sluzby.getBoundingClientRect();
+        setShowExploreButton(rect.top > window.innerHeight * 0.8);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
     <>
       <Navbar />
       {/* 3D World Scene Fixed in Background */}
-      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1 }}>
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: isExploreMode ? 10 : -1 }}>
         <Canvas shadows camera={{ position: [0, 5, 20], fov: 45 }}>
-          <Hero3D />
+          <Hero3D isExploreMode={isExploreMode} />
         </Canvas>
       </div>
 
+      {/* Explore Mode Toggle Button */}
+      <div style={{
+        position: 'fixed',
+        bottom: '2rem',
+        left: '2rem', // Avoid overlap with FloatingContact
+        zIndex: 100,
+        display: showExploreButton ? 'flex' : 'none',
+        alignItems: 'center',
+        gap: '1rem',
+        opacity: showExploreButton ? 1 : 0,
+        transition: 'opacity 0.3s ease',
+        pointerEvents: showExploreButton ? 'auto' : 'none',
+      }}>
+        <button
+          onClick={() => {
+            setIsExploreMode(!isExploreMode);
+            if (!isExploreMode) {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              document.body.style.overflow = 'hidden';
+            } else {
+              document.body.style.overflow = 'auto';
+            }
+          }}
+          style={{
+            background: isExploreMode ? 'var(--text-primary)' : 'var(--primary)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '99px',
+            padding: '1rem 1.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+            transition: 'all 0.3s ease',
+            fontFamily: 'var(--font-heading)'
+          }}
+        >
+          {isExploreMode ? <><X size={20} /> Návrat do Príbehu</> : <><Orbit size={20} /> Preskúmať 3D Svet</>}
+        </button>
+      </div>
+
       {/* Native HTML Scroll Content */}
-      <div style={{ width: '100vw', position: 'relative' }}>
+      <div style={{
+        width: '100vw',
+        position: 'relative',
+        opacity: isExploreMode ? 0 : 1,
+        pointerEvents: isExploreMode ? 'none' : 'auto',
+        transition: 'opacity 0.5s ease'
+      }}>
         {/* We place these sections directly in the normal document flow so they push the standard page content down */}
 
         {/* PAGE 1 (0-1): INITIAL HERO - RIGHT */}

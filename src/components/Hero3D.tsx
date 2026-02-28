@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Line, Sphere, Cylinder, Box, Text3D } from '@react-three/drei';
+import { Line, Sphere, Cylinder, Box, Text3D, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 
@@ -267,8 +267,8 @@ function MergedIsland() {
 
     return (
         // Static island, rotated to lie flat on the XZ plane.
-        // We set position Y negative enough (-3.0) so that object bases (at y=-1.5) sit precisely on the surface without being submerged.
-        <group position={[0, -3.0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        // We set position Y to -1.8 to account for the 0.8 bevel, placing the top surface exactly at y=-1.0 where objects are anchored.
+        <group position={[0, -1.8, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             {/* The main landmass -> we sink it heavily downwards using local Z so the top face is precisely at y=0 (relative to group) */}
             <mesh position={[0, 0, -4]}>
                 <extrudeGeometry args={[shape, extrudeSettings]} />
@@ -476,7 +476,7 @@ function snapProgress(rawP: number): number {
     return 1.0;
 }
 
-function CameraController() {
+function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
     const vLookAt = useMemo(() => new THREE.Vector3(2, 2, 2), []);
 
     const [scrollT, setScrollT] = useState(0);
@@ -585,7 +585,14 @@ function CameraController() {
             targetLookAt.lerpVectors(p6Look, p7Look, p);
         }
 
-        // Smoother lerp for cinematic feel
+        if (isExploreMode) {
+            // When in explore mode, we smoothly transition the camera *once* to an overview,
+            // then OrbitControls takes over completely. We don't want to constantly lerp here.
+            // We'll let OrbitControls handle the framing, but we can do a quick snap to a good starting position if needed.
+            return;
+        }
+
+        // Smoother lerp for cinematic feel (Only when NOT exploring)
         state.camera.position.lerp(targetPos, 0.08);
         vLookAt.lerp(targetLookAt, 0.08);
         state.camera.lookAt(vLookAt);
@@ -594,7 +601,7 @@ function CameraController() {
     return null;
 }
 
-export default function Hero3D() {
+export default function Hero3D({ isExploreMode = false }: { isExploreMode?: boolean }) {
     // Tower on the bottom left of the screen (negative X, positive Z)
     const towerPos = useMemo(() => new THREE.Vector3(-18, -1, 12), []);
     const towerHeight = 12; // Increased again per user request
@@ -786,7 +793,17 @@ export default function Hero3D() {
             <directionalLight position={[20, 30, 10]} intensity={1.8} color="#ffffff" castShadow />
             <pointLight position={[-10, 10, -5]} intensity={0.6} color="#70489D" />
 
-            <CameraController />
+            {isExploreMode ? (
+                <OrbitControls
+                    makeDefault
+                    enablePan={true}
+                    enableZoom={true}
+                    enableRotate={true}
+                    target={[0, 0, 0]}
+                />
+            ) : (
+                <CameraController isExploreMode={isExploreMode} />
+            )}
 
             <group>
                 <MergedIsland />
