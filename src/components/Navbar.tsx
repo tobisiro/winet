@@ -1,10 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [internetDropdownOpen, setInternetDropdownOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handlePokrytieClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        setMobileMenuOpen(false);
+        if (location.pathname !== '/') {
+            navigate('/');
+            setTimeout(() => {
+                const el = document.getElementById('pokrytie');
+                el?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        } else {
+            const el = document.getElementById('pokrytie');
+            el?.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <nav
@@ -14,9 +41,12 @@ export default function Navbar() {
                 left: 0,
                 right: 0,
                 zIndex: 50,
-                transition: 'all 0.3s ease',
-                background: 'transparent',
-                borderBottom: 'none',
+                transition: 'all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                background: scrolled ? 'rgba(255, 255, 255, 0.85)' : 'transparent',
+                backdropFilter: scrolled ? 'blur(16px)' : 'none',
+                WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
+                borderBottom: scrolled ? '1px solid rgba(0,0,0,0.06)' : 'none',
+                boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.05)' : 'none',
                 padding: '1rem 0'
             }}
         >
@@ -112,7 +142,7 @@ export default function Navbar() {
                         </div>
 
                         <Link to="/televizia" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Televízia</Link>
-                        <Link to="/#pokrytie" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Pokrytie</Link>
+                        <a href="/#pokrytie" onClick={handlePokrytieClick} style={{ color: 'var(--text-secondary)', textDecoration: 'none', cursor: 'pointer' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Pokrytie</a>
                         <Link to="/kontakt" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} onMouseOver={e => (e.target as HTMLElement).style.color = 'var(--primary)'} onMouseOut={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}>Kontakt</Link>
 
                         <a
@@ -174,7 +204,7 @@ export default function Navbar() {
                     <div style={{ height: '1px', background: 'rgba(0,0,0,0.06)', margin: '0.5rem 0' }} />
 
                     <Link to="/televizia" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-primary)', textDecoration: 'none', padding: '0.6rem 0' }}>Televízia</Link>
-                    <Link to="/#pokrytie" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-primary)', textDecoration: 'none', padding: '0.6rem 0' }}>Pokrytie</Link>
+                    <a href="/#pokrytie" onClick={handlePokrytieClick} style={{ color: 'var(--text-primary)', textDecoration: 'none', padding: '0.6rem 0', cursor: 'pointer' }}>Pokrytie</a>
                     <Link to="/kontakt" onClick={() => setMobileMenuOpen(false)} style={{ color: 'var(--text-primary)', textDecoration: 'none', padding: '0.6rem 0' }}>Kontakt</Link>
 
                     <div style={{ height: '1px', background: 'rgba(0,0,0,0.06)', margin: '0.5rem 0' }} />

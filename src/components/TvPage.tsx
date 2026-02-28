@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Navbar from './Navbar';
+import Footer from './Footer';
 import { Tv, Info, ExternalLink, PlayCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -193,17 +194,7 @@ const TvPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Footer */}
-            <div style={{
-                padding: '3rem 5vw',
-                background: '#FFFFFF',
-                borderTop: '1px solid rgba(0,0,0,0.05)',
-                textAlign: 'center',
-                color: 'var(--text-secondary)',
-                fontSize: '0.9rem'
-            }}>
-                © {new Date().getFullYear()} WI-NET s.r.o. Všetky práva vyhradené. Vytvorené pre maximálnu rýchlosť a stabilitu.
-            </div>
+            <Footer />
         </div>
     );
 };

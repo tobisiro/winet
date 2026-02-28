@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import PricingSection from './PricingSection';
 import FloatingContact from './FloatingContact';
+import Footer from './Footer';
 import { Wifi, Zap, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -93,6 +94,7 @@ export default function InternetPage() {
                 {/* Pricing Section with pre-selected tab */}
                 <PricingSection key={defaultTab} defaultTab={defaultTab} />
             </div>
+            <Footer />
             <FloatingContact />
         </>
     );

@@ -1,19 +1,41 @@
 
 import { Canvas } from '@react-three/fiber';
+import { useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Hero3D from './components/Hero3D';
 import ServiceCard from './components/ServiceCard';
 import PricingSection from './components/PricingSection';
 import CoverageSection from './components/CoverageSection';
 import FloatingContact from './components/FloatingContact';
-import { Wifi, Zap, Tv, ChevronRight, ShieldCheck, MapPin, Gauge } from 'lucide-react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Footer from './components/Footer';
+import { Wifi, Zap, Tv, ChevronRight, ChevronDown, ShieldCheck, MapPin, Gauge } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import ContactPage from './components/ContactPage';
 import TvPage from './components/TvPage';
 import InternetPage from './components/InternetPage';
 import './App.css';
 
 function Home() {
+  const scrollRevealRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const elements = document.querySelectorAll('.scroll-reveal');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -29,16 +51,16 @@ function Home() {
         {/* We place these sections directly in the normal document flow so they push the standard page content down */}
 
         {/* PAGE 1 (0-1): INITIAL HERO - RIGHT */}
-        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
+        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none', position: 'relative' }}>
           <div className="animate-fade-in hero-card" style={{
             pointerEvents: 'auto',
             width: '100%',
-            maxWidth: '55vw',
+            maxWidth: '420px',
             display: 'flex',
             flexDirection: 'column',
             background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
             border: '1px solid rgba(255, 255, 255, 0.5)',
             borderTop: '1px solid rgba(255, 255, 255, 0.9)',
             borderLeft: '1px solid rgba(255, 255, 255, 0.9)',
@@ -74,13 +96,29 @@ function Home() {
               </a>
             </div>
           </div>
+          {/* Scroll Indicator */}
+          <div className="scroll-indicator" style={{
+            position: 'absolute',
+            bottom: '2rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '0.5rem',
+            pointerEvents: 'none',
+            color: 'rgba(15, 23, 42, 0.5)'
+          }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px' }}>Scrollujte</span>
+            <ChevronDown size={24} />
+          </div>
         </section>
 
         {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
         <section className="hero-spacer" />
 
-        {/* PAGE 3 (2-3): OPTICAL LINES FLIGHT - RIGHT */}
-        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
+        {/* PAGE 3 (2-3): OPTICAL LINES FLIGHT - LEFT */}
+        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '0 5vw', pointerEvents: 'none' }}>
           <div className="hero-card" style={{
             pointerEvents: 'auto',
             width: '100%',
@@ -111,7 +149,39 @@ function Home() {
         {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
         <section className="hero-spacer" />
 
-        {/* PAGE 5 (4-5): TRANSMITTER TOWER - LEFT */}
+        {/* PAGE 4: CABLE DETAIL CLOSE-UP - RIGHT */}
+        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
+          <div className="hero-card" style={{
+            pointerEvents: 'auto',
+            width: '100%',
+            maxWidth: '430px',
+            display: 'flex',
+            flexDirection: 'column',
+            background: 'rgba(255, 255, 255, 0.15)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.5)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.9)',
+            borderLeft: '1px solid rgba(255, 255, 255, 0.9)',
+            borderRadius: '32px',
+            padding: '3rem',
+            boxShadow: '0 30px 60px rgba(0,0,0,0.08)',
+          }}>
+            <h2 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--text-primary)', letterSpacing: '-1px', lineHeight: 1.2 }}>Distribučná sieť</h2>
+            <p style={{ color: '#1E293B', fontSize: '1.05rem', marginBottom: '1.5rem', lineHeight: 1.6, fontWeight: 500 }}>
+              Dáta putujú cez stovky kilometrov optických káblov a vedení priamo k vám domov. Každý stĺp a každý spoj je starostlivo udržiavaný, aby ste mali stabilné pripojenie za každého počasia.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.4)', borderRadius: '16px' }}>
+              <Zap size={24} color="var(--primary)" />
+              <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.95rem' }}>Robustná infraštruktúra pre nepretržité spojenie</span>
+            </div>
+          </div>
+        </section>
+
+        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
+        <section className="hero-spacer" />
+
+        {/* PAGE 5: TRANSMITTER TOWER - LEFT */}
         <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '0 5vw', pointerEvents: 'none' }}>
           <div className="hero-card" style={{
             pointerEvents: 'auto',
@@ -143,7 +213,7 @@ function Home() {
         {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
         <section className="hero-spacer" />
 
-        {/* PAGE 7 (6-7): ADMIN BUILDING - RIGHT */}
+        {/* PAGE 7: VILLAGE/HOUSES - RIGHT */}
         <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
           <div className="hero-card" style={{
             pointerEvents: 'auto',
@@ -183,9 +253,20 @@ function Home() {
 
         {/* PAGE 9+ (8+): STANDARD PAGE CONTENT OVERLAID ON 3D SCENE */}
         <div style={{ minHeight: '100vh', background: 'var(--bg-surface-light)', pointerEvents: 'auto', position: 'relative', zIndex: 10 }}>
+          {/* Gradient transition from 3D scene to content */}
+          <div style={{
+            position: 'absolute',
+            top: '-120px',
+            left: 0,
+            right: 0,
+            height: '120px',
+            background: 'linear-gradient(to bottom, transparent 0%, var(--bg-surface-light) 100%)',
+            pointerEvents: 'none',
+            zIndex: 10
+          }} />
 
           {/* Services Section */}
-          <section id="sluzby" className="section-padding" style={{ position: 'relative' }}>
+          <section id="sluzby" className="section-padding scroll-reveal" style={{ position: 'relative' }}>
             <div className="container">
               <div style={{ textAlign: 'center', marginBottom: '4rem', maxWidth: '700px', margin: '0 auto 4rem auto' }}>
                 <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Vyberte si službu podľa vašich predstáv</h2>
@@ -225,7 +306,7 @@ function Home() {
           </section>
 
           {/* Prečo my Section */}
-          <section id="vyhody" className="section-padding" style={{ background: 'var(--bg-dark)' }}>
+          <section id="vyhody" className="section-padding scroll-reveal" style={{ background: 'var(--bg-dark)' }}>
             <div className="container">
               <h2 style={{ fontSize: '2.5rem', textAlign: 'center', marginBottom: '4rem', color: 'var(--text-primary)' }}>Prečo my?</h2>
 
@@ -260,66 +341,7 @@ function Home() {
           <CoverageSection />
           <PricingSection />
 
-          {/* Footer */}
-          <footer id="kontakt" className="section-padding" style={{ background: '#0F172A', borderTop: '1px solid var(--glass-border)', color: 'var(--text-inverted)' }}>
-            <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem' }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
-                  <img src={`${import.meta.env.BASE_URL}logo.png`} alt="WI-NET" style={{ height: '32px', filter: 'brightness(1.5)' }} />
-                </div>
-                <p style={{ color: '#94A3B8', marginBottom: '1rem' }}>
-                  WI-NET s.r.o.<br />
-                  Hlavná 8/18<br />
-                  086 41 Raslavice
-                </p>
-                <p style={{ color: '#94A3B8' }}>
-                  <strong>Tel:</strong> <a href="tel:0543211880" style={{ color: 'var(--primary)' }}>054 321 18 80</a><br />
-                  <strong>Email:</strong> <a href="mailto:internet@wi-net.sk" style={{ color: 'var(--primary)' }}>internet@wi-net.sk</a>
-                </p>
-              </div>
-
-              <div>
-                <h4 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: 'var(--text-inverted)' }}>Dokumenty</h4>
-                <ul style={{ listStyle: 'none', padding: 0, gap: '0.8rem', display: 'flex', flexDirection: 'column' }}>
-                  <li><a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>O nás</a></li>
-                  <li><a href="http://winet.sk/kontaktne-informacie/" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Kontaktné informácie</a></li>
-                  <li><a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Kariéra</a></li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontWeight: 600 }}>Dokumenty</h4>
-                <ul style={{ listStyle: 'none', padding: 0, gap: '0.8rem', display: 'flex', flexDirection: 'column' }}>
-                  <li><a href={`${import.meta.env.BASE_URL}dokumenty/cennik-optika.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník Optika</a></li>
-                  <li><a href={`${import.meta.env.BASE_URL}dokumenty/cennik-wifi.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník Wifi</a></li>
-                  <li><a href={`${import.meta.env.BASE_URL}dokumenty/VZP_WI-NET.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Všeobecné zmluvné podmienky</a></li>
-                  <li><span style={{ color: 'rgba(255,255,255,0.2)' }}>Špecifikácia rozhraní (TBD)</span></li>
-                  <li><span style={{ color: 'rgba(255,255,255,0.2)' }}>Licencia a OP (TBD)</span></li>
-                  <li><a href={`${import.meta.env.BASE_URL}dokumenty/transparentnost.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Transparentnosť</a></li>
-                  <li><a href="http://winet.sk/index.php/tsur/" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Tech. špecifikácia rozhrania</a></li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontWeight: 600 }}>Doplnky</h4>
-                <ul style={{ listStyle: 'none', padding: 0, gap: '0.8rem', display: 'flex', flexDirection: 'column' }}>
-                  <li><a href="https://www.speedmeter.sk/" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Meranie rýchlosti</a></li>
-                  <li><a href="https://download.teamviewer.com/download/TeamViewerQS.exe" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>TeamViewer</a></li>
-                  <li><a href="https://download.anydesk.com/AnyDesk.exe" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>AnyDesk</a></li>
-                  <li><a href="http://mail.websupport.sk" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>WebMail</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div style={{ marginTop: '3rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center', fontSize: '0.9rem', color: '#64748B' }}>
-              © {new Date().getFullYear()} WI-NET s.r.o. Všetky práva vyhradené. Vytvorené pre maximálnu rýchlosť a stabilitu.
-            </div>
-            <style dangerouslySetInnerHTML={{
-              __html: `
-                .hover-text-primary:hover { color: var(--primary) !important; }
-              `}}
-            />
-          </footer>
+          <Footer />
 
         </div> {/* End of HTML overlay container */}
 
@@ -329,9 +351,18 @@ function Home() {
   );
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function App() {
   return (
     <Router basename={import.meta.env.BASE_URL}>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/internet" element={<InternetPage />} />

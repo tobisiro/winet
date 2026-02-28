@@ -106,7 +106,7 @@ function AdminBuilding({ position, rotation = [0, 0, 0] }: { position: [number, 
                     position={[-3.2, -0.6, 0]} // Centering manually
                 >
                     winet
-                    <meshStandardMaterial color="#0F172A" roughness={0.2} metalness={0.8} />
+                    <meshStandardMaterial color="#FF6B00" roughness={0.2} metalness={0.8} />
                 </Text3D>
             </group>
 
@@ -128,7 +128,7 @@ function AdminBuilding({ position, rotation = [0, 0, 0] }: { position: [number, 
                     position={[-1.8, -0.35, 0]} // Centering manually
                 >
                     winet
-                    <meshStandardMaterial color="#0ea5e9" roughness={0.2} metalness={0.8} />
+                    <meshStandardMaterial color="#FF6B00" roughness={0.2} metalness={0.8} />
                 </Text3D>
             </group>
 
@@ -470,6 +470,12 @@ function easeInOutCubic(x: number): number {
     return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }
 
+// Camera holds still while card is visible: transition in first 30%, hold for rest
+function snapProgress(rawP: number): number {
+    if (rawP < 0.3) return easeInOutCubic(rawP / 0.3);
+    return 1.0;
+}
+
 function CameraController() {
     const vLookAt = useMemo(() => new THREE.Vector3(2, 2, 2), []);
 
@@ -481,8 +487,8 @@ function CameraController() {
             // Detect if spacers are visible (mobile) by checking the first one's computed height
             const spacer = document.querySelector('.hero-spacer') as HTMLElement | null;
             const spacersVisible = spacer ? spacer.offsetHeight > 0 : false;
-            // On desktop: 4 card sections. On mobile: 4 cards + 4 spacers = 8 sections.
-            const numScreens = spacersVisible ? 8 : 4;
+            // On desktop: 5 card sections. On mobile: 5 cards + 5 spacers = 10 sections.
+            const numScreens = spacersVisible ? 10 : 5;
             const maxScroll = window.innerHeight * numScreens;
             if (maxScroll <= 0) {
                 setScrollT(0);
@@ -508,75 +514,88 @@ function CameraController() {
         let targetPos = new THREE.Vector3();
         let targetLookAt = new THREE.Vector3();
 
-        if (t < 0.2) {
-            // PAGE 1: Card Right
-            let p = t / 0.2;
-            p = easeInOutCubic(p);
-            const p1Pos = new THREE.Vector3(32, 10, -18);
-            const p1Look = new THREE.Vector3(-8, 5, -5);
+        if (t < 0.167) {
+            // VP1: Hero – Admin building with winet logo (card RIGHT)
+            let p = t / 0.167;
+            p = snapProgress(p);
+            const p1Pos = new THREE.Vector3(28, 8, 5);
+            const p1Look = new THREE.Vector3(5, 3, 2);
 
-            const p2Pos = new THREE.Vector3(14, 8, -20);
-            const p2Look = new THREE.Vector3(-14, 6, 2);
+            const p2Pos = new THREE.Vector3(20, 6, -5);
+            const p2Look = new THREE.Vector3(5, 3, 0);
 
             targetPos.lerpVectors(p1Pos, p2Pos, p);
             targetLookAt.lerpVectors(p1Look, p2Look, p);
-        } else if (t < 0.4) {
-            // PAGE 2: Card Right 
-            let p = (t - 0.2) / 0.2;
-            p = easeInOutCubic(p);
+        } else if (t < 0.333) {
+            // VP2: Fiber intro – sweeping along pole line (card LEFT)
+            let p = (t - 0.167) / 0.166;
+            p = snapProgress(p);
 
-            const p2Pos = new THREE.Vector3(14, 8, -20);
-            const p2Look = new THREE.Vector3(-14, 6, 2);
+            const p2Pos = new THREE.Vector3(20, 6, -5);
+            const p2Look = new THREE.Vector3(5, 3, 0);
 
-            const p3Pos = new THREE.Vector3(-4, 6, -18);
-            const p3Look = new THREE.Vector3(-18, 5, 8);
+            const p3Pos = new THREE.Vector3(5, 3.5, -12);
+            const p3Look = new THREE.Vector3(-5, 3, -8);
 
             targetPos.lerpVectors(p2Pos, p3Pos, p);
             targetLookAt.lerpVectors(p2Look, p3Look, p);
-        } else if (t < 0.6) {
-            // PAGE 3: Card Left -> Tower Right
-            let p = (t - 0.4) / 0.2;
-            p = easeInOutCubic(p);
+        } else if (t < 0.5) {
+            // VP3: Cable detail close-up – eye-level between poles, data pulses visible (card RIGHT)
+            let p = (t - 0.333) / 0.167;
+            p = snapProgress(p);
 
-            const p3Pos = new THREE.Vector3(-4, 6, -18);
-            const p3Look = new THREE.Vector3(-18, 5, 8);
+            const p3Pos = new THREE.Vector3(5, 3.5, -12);
+            const p3Look = new THREE.Vector3(-5, 3, -8);
 
-            const p4Pos = new THREE.Vector3(-12, 6, -4);
-            const p4Look = new THREE.Vector3(-18, 6, 12);
+            const p4Pos = new THREE.Vector3(-8, 3, -10);
+            const p4Look = new THREE.Vector3(-15, 4, -5);
 
             targetPos.lerpVectors(p3Pos, p4Pos, p);
             targetLookAt.lerpVectors(p3Look, p4Look, p);
-        } else if (t < 0.8) {
-            // PAGE 4: Card Right -> Tower Left
-            let p = (t - 0.6) / 0.2;
-            p = easeInOutCubic(p);
+        } else if (t < 0.667) {
+            // VP4: Transmitter tower – camera lowered so tip is below navbar (card LEFT)
+            let p = (t - 0.5) / 0.167;
+            p = snapProgress(p);
 
-            const p4Pos = new THREE.Vector3(-12, 6, -4);
-            const p4Look = new THREE.Vector3(-18, 6, 12);
+            const p4Pos = new THREE.Vector3(-8, 3, -10);
+            const p4Look = new THREE.Vector3(-15, 4, -5);
 
-            const p5Pos = new THREE.Vector3(-14, 5, 5);
-            const p5Look = new THREE.Vector3(-20, 8, 12);
+            const p5Pos = new THREE.Vector3(-22, 4, -2);
+            const p5Look = new THREE.Vector3(-18, 5, 12);
 
             targetPos.lerpVectors(p4Pos, p5Pos, p);
             targetLookAt.lerpVectors(p4Look, p5Look, p);
-        } else {
-            // PAGE 5-6: Pull back backwards/upwards to reveal entire scene below
-            let p = Math.min((t - 0.8) / 0.2, 1.0);
-            p = easeInOutCubic(p);
+        } else if (t < 0.833) {
+            // VP5: Houses/village – local support (card RIGHT)
+            let p = (t - 0.667) / 0.166;
+            p = snapProgress(p);
 
-            const p5Pos = new THREE.Vector3(-14, 5, 5);
-            const p5Look = new THREE.Vector3(-20, 8, 12);
+            const p5Pos = new THREE.Vector3(-22, 4, -2);
+            const p5Look = new THREE.Vector3(-18, 5, 12);
 
-            const p6Pos = new THREE.Vector3(5, 18, 20); // High up, pulled away
-            const p6Look = new THREE.Vector3(-5, 2, -5); // Looking down into the center of the town
+            const p6Pos = new THREE.Vector3(8, 4, -14);
+            const p6Look = new THREE.Vector3(2, 1, -6);
 
             targetPos.lerpVectors(p5Pos, p6Pos, p);
             targetLookAt.lerpVectors(p5Look, p6Look, p);
+        } else {
+            // VP6: Final zoom – close-up on house with WiFi receiver
+            let p = Math.min((t - 0.833) / 0.167, 1.0);
+            p = snapProgress(p);
+
+            const p6Pos = new THREE.Vector3(8, 4, -14);
+            const p6Look = new THREE.Vector3(2, 1, -6);
+
+            const p7Pos = new THREE.Vector3(4, 2.5, -10);
+            const p7Look = new THREE.Vector3(2, 1.5, -8);
+
+            targetPos.lerpVectors(p6Pos, p7Pos, p);
+            targetLookAt.lerpVectors(p6Look, p7Look, p);
         }
 
-        // Extremely fast lerp to ensure snap scrolling feels instantly responsive
-        state.camera.position.lerp(targetPos, 0.1);
-        vLookAt.lerp(targetLookAt, 0.1);
+        // Smoother lerp for cinematic feel
+        state.camera.position.lerp(targetPos, 0.08);
+        vLookAt.lerp(targetLookAt, 0.08);
         state.camera.lookAt(vLookAt);
     });
 
