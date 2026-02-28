@@ -470,17 +470,11 @@ function easeInOutCubic(x: number): number {
     return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }
 
-// Camera holds still while card is visible: transition in first 30%, hold for rest
-function snapProgress(rawP: number): number {
-    if (rawP < 0.3) return easeInOutCubic(rawP / 0.3);
-    return 1.0;
-}
-
-function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
+function CameraController({ isExploreMode, onViewChange }: { isExploreMode: boolean, onViewChange: (vp: number) => void }) {
     const vLookAt = useMemo(() => new THREE.Vector3(2, 2, 2), []);
 
     const [scrollT, setScrollT] = useState(0);
-    const [isMobile, setIsMobile] = useState(false);
+    const activeVp = useRef(-1);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -497,7 +491,6 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
         };
 
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
             handleScroll();
         };
 
@@ -517,10 +510,10 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
         let targetPos = new THREE.Vector3();
         let targetLookAt = new THREE.Vector3();
 
-        if (t < 0.167) {
-            // VP1: Hero – Admin building
-            let p = t / 0.167;
-            p = snapProgress(p);
+        if (t < 0.15) {
+            // VP0: Hero – Admin building
+            let p = t / 0.15;
+            p = easeInOutCubic(p);
             const p1Pos = new THREE.Vector3(41.6, 11.0, 6.8);
             const p1Look = new THREE.Vector3(5, 3, 2);
             const p2Pos = new THREE.Vector3(33.1, 8.6, -9.4);
@@ -528,10 +521,10 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
 
             targetPos.lerpVectors(p1Pos, p2Pos, p);
             targetLookAt.lerpVectors(p1Look, p2Look, p);
-        } else if (t < 0.333) {
-            // VP2: Fiber intro – pole line
-            let p = (t - 0.167) / 0.166;
-            p = snapProgress(p);
+        } else if (t < 0.45) {
+            // VP1: Fiber intro – pole line (Doubled duration)
+            let p = (t - 0.15) / 0.30;
+            p = easeInOutCubic(p);
             const p2Pos = new THREE.Vector3(33.1, 8.6, -9.4);
             const p2Look = new THREE.Vector3(5, 3, 0);
             const p3Pos = new THREE.Vector3(18.0, 4.2, -17.2);
@@ -539,10 +532,10 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
 
             targetPos.lerpVectors(p2Pos, p3Pos, p);
             targetLookAt.lerpVectors(p2Look, p3Look, p);
-        } else if (t < 0.5) {
-            // VP3: Cable detail close-up
-            let p = (t - 0.333) / 0.167;
-            p = snapProgress(p);
+        } else if (t < 0.60) {
+            // VP2: Cable detail close-up
+            let p = (t - 0.45) / 0.15;
+            p = easeInOutCubic(p);
             const p3Pos = new THREE.Vector3(18.0, 4.2, -17.2);
             const p3Look = new THREE.Vector3(-5, 3, -8);
             const p4Pos = new THREE.Vector3(3.3, 1.4, -18.1);
@@ -550,10 +543,10 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
 
             targetPos.lerpVectors(p3Pos, p4Pos, p);
             targetLookAt.lerpVectors(p3Look, p4Look, p);
-        } else if (t < 0.667) {
-            // VP4: Transmitter tower
-            let p = (t - 0.5) / 0.167;
-            p = snapProgress(p);
+        } else if (t < 0.75) {
+            // VP3: Transmitter tower
+            let p = (t - 0.60) / 0.15;
+            p = easeInOutCubic(p);
             const p4Pos = new THREE.Vector3(3.3, 1.4, -18.1);
             const p4Look = new THREE.Vector3(-15, 4, -5);
             const p5Pos = new THREE.Vector3(-25.8, 3.0, -15.4);
@@ -561,10 +554,10 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
 
             targetPos.lerpVectors(p4Pos, p5Pos, p);
             targetLookAt.lerpVectors(p4Look, p5Look, p);
-        } else if (t < 0.833) {
-            // VP5: Houses/village
-            let p = (t - 0.667) / 0.166;
-            p = snapProgress(p);
+        } else if (t < 0.90) {
+            // VP4: Houses/village
+            let p = (t - 0.75) / 0.15;
+            p = easeInOutCubic(p);
             const p5Pos = new THREE.Vector3(-25.8, 3.0, -15.4);
             const p5Look = new THREE.Vector3(-18, 5, 12);
             const p6Pos = new THREE.Vector3(16.1, 8.0, -24.7);
@@ -573,9 +566,9 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
             targetPos.lerpVectors(p5Pos, p6Pos, p);
             targetLookAt.lerpVectors(p5Look, p6Look, p);
         } else {
-            // VP6: Final zoom – house detail
-            let p = Math.min((t - 0.833) / 0.167, 1.0);
-            p = snapProgress(p);
+            // VP5: Final zoom – house detail
+            let p = Math.min((t - 0.90) / 0.10, 1.0);
+            p = easeInOutCubic(p);
             const p6Pos = new THREE.Vector3(16.1, 8.0, -24.7);
             const p6Look = new THREE.Vector3(2, 1, -6);
             const p7Pos = new THREE.Vector3(13.3, 7.2, -19.3);
@@ -585,11 +578,20 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
             targetLookAt.lerpVectors(p6Look, p7Look, p);
         }
 
-        if (isExploreMode) {
-            // When in explore mode, we smoothly transition the camera *once* to an overview,
-            // then OrbitControls takes over completely. We don't want to constantly lerp here.
-            // We'll let OrbitControls handle the framing, but we can do a quick snap to a good starting position if needed.
-            return;
+        if (isExploreMode) return;
+
+        // Determine active viewpoint with gaps (so cards disappear during transitions)
+        let vp = -1;
+        if (t >= 0.0 && t < 0.12) vp = 0;
+        else if (t >= 0.18 && t < 0.42) vp = 1;
+        else if (t >= 0.48 && t < 0.57) vp = 2;
+        else if (t >= 0.63 && t < 0.72) vp = 3;
+        else if (t >= 0.78 && t < 0.87) vp = 4;
+        else if (t >= 0.92 && t <= 1.0) vp = 5;
+
+        if (vp !== activeVp.current) {
+            activeVp.current = vp;
+            onViewChange(vp);
         }
 
         // Smoother lerp for cinematic feel (Only when NOT exploring)
@@ -604,7 +606,9 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
 export default function Hero3D({ isExploreMode = false }: { isExploreMode?: boolean }) {
     // Tower on the bottom left of the screen (negative X, positive Z)
     const towerPos = useMemo(() => new THREE.Vector3(-18, -1, 12), []);
-    const towerHeight = 12; // Increased again per user request
+    const towerHeight = 12;
+
+    const [activeVp, setActiveVp] = useState(0);
 
     // Admin building
     const adminBuildingPos = useMemo(() => new THREE.Vector3(12, -1, 6), []); // Moved to mid-left
@@ -802,7 +806,7 @@ export default function Hero3D({ isExploreMode = false }: { isExploreMode?: bool
                     target={[0, 0, 0]}
                 />
             ) : (
-                <CameraController isExploreMode={isExploreMode} />
+                <CameraController isExploreMode={isExploreMode} onViewChange={() => { }} />
             )}
 
             <group>

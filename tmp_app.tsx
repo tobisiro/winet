@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero3D from './components/Hero3D';
 import ServiceCard from './components/ServiceCard';
@@ -15,6 +15,7 @@ import InternetPage from './components/InternetPage';
 import './App.css';
 
 function Home() {
+  const scrollRevealRef = useRef<HTMLDivElement>(null);
   const [isExploreMode, setIsExploreMode] = useState(false);
   const [showExploreButton, setShowExploreButton] = useState(true);
 
@@ -159,6 +160,8 @@ function Home() {
               </a>
             </div>
           </div>
+          {/* Scroll Indicator */}
+
         </section>
 
         {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
@@ -260,40 +263,8 @@ function Home() {
         {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
         <section className="hero-spacer" />
 
-        {/* PAGE 6: VILLAGE/HOUSES - RIGHT */}
+        {/* PAGE 7: VILLAGE/HOUSES - RIGHT */}
         <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div className="hero-card" style={{
-            pointerEvents: 'auto',
-            width: '100%',
-            maxWidth: '430px',
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.5)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.9)',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.9)',
-            borderRadius: '32px',
-            padding: '3rem',
-            boxShadow: '0 30px 60px rgba(0,0,0,0.08)',
-          }}>
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--text-primary)', letterSpacing: '-1px', lineHeight: 1.2 }}>Vaša domácnosť pripojená</h2>
-            <p style={{ color: '#1E293B', fontSize: '1.05rem', marginBottom: '1.5rem', lineHeight: 1.6, fontWeight: 500 }}>
-              Či už optika alebo WiFi – Vaša domácnosť je vždy na konci každého nášho kábla a každého lúča nášho vysielača. Internetu pre vás a vašu rodinu venujeme maximálnu starostlivosť.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.4)', borderRadius: '16px' }}>
-              <span style={{ fontSize: '1.8rem' }}>🏠</span>
-              <span style={{ fontWeight: 600, color: '#0F172A', fontSize: '0.95rem' }}>Pripojenie šité na mieru každej domácnosti</span>
-            </div>
-          </div>
-        </section>
-
-        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
-        <section className="hero-spacer" />
-
-        {/* PAGE 7: LOCAL SUPPORT - LEFT */}
-        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '0 5vw', pointerEvents: 'none' }}>
           <div className="hero-card" style={{
             pointerEvents: 'auto',
             width: '100%',
@@ -423,6 +394,7 @@ function Home() {
           <Footer />
 
         </div> {/* End of HTML overlay container */}
+
       </div> {/* End of native scroll container */}
       <FloatingContact />
     </>
