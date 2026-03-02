@@ -3,6 +3,11 @@ import { useFrame } from '@react-three/fiber';
 import { Line, Sphere, Cylinder, Box, Text3D, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
+const getBaseUrl = () => {
+    const base = import.meta.env.BASE_URL || '/';
+    return base.endsWith('/') ? base : `${base}/`;
+};
+
 
 // Modern House
 function ModernHouse({ position, hasWifiReceiver = false, hasFiberBox = false, receiverRotation = [0, 0, 0] }: { position: [number, number, number]; hasWifiReceiver?: boolean; hasFiberBox?: boolean; receiverRotation?: [number, number, number] }) {
@@ -94,7 +99,7 @@ function AdminBuilding({ position, rotation = [0, 0, 0] }: { position: [number, 
                     <meshStandardMaterial color="#E2E8F0" roughness={0.8} />
                 </Box>
                 <Text3D
-                    font="/Inter_Bold.json"
+                    font={`${getBaseUrl()}Inter_Bold.json`}
                     size={1.6}
                     height={0.2}
                     curveSegments={12}
@@ -116,7 +121,7 @@ function AdminBuilding({ position, rotation = [0, 0, 0] }: { position: [number, 
                     <meshStandardMaterial color="#E2E8F0" roughness={0.8} />
                 </Box>
                 <Text3D
-                    font="/Inter_Bold.json"
+                    font={`${getBaseUrl()}Inter_Bold.json`}
                     size={0.9}
                     height={0.1}
                     curveSegments={12}

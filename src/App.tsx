@@ -1,4 +1,5 @@
 import { Canvas } from '@react-three/fiber';
+import * as THREE from 'three';
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Home3D from './components/Home3D';
@@ -56,7 +57,7 @@ function Home() {
       <Navbar />
       {/* 3D World Scene Fixed in Background */}
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: isExploreMode ? 10 : -1 }}>
-        <Canvas shadows camera={{ position: [0, 5, 20], fov: 45 }}>
+        <Canvas shadows={{ type: THREE.PCFShadowMap }} camera={{ position: [0, 5, 20], fov: 45 }}>
           <Home3D isExploreMode={isExploreMode} />
         </Canvas>
       </div>

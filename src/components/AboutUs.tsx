@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { ChevronRight, ArrowLeft } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowLeft } from 'lucide-react';
 import About3D from './About3D';
 import { Canvas } from '@react-three/fiber';
+import * as THREE from 'three';
 
 export default function AboutUs() {
   const [isExploreMode, setIsExploreMode] = useState(false);
@@ -20,7 +21,7 @@ export default function AboutUs() {
           pointerEvents: isExploreMode ? 'auto' : 'none'
         }}
       >
-        <Canvas camera={{ position: [0, 180, 0], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+        <Canvas shadows={{ type: THREE.PCFShadowMap }} camera={{ position: [0, 180, 0], fov: 45 }} gl={{ antialias: true, alpha: true }}>
           <About3D isExploreMode={isExploreMode} />
         </Canvas>
       </div>
