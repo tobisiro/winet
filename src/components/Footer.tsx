@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const getBaseUrl = () => {
+    const base = import.meta.env.BASE_URL || '/';
+    return base.endsWith('/') ? base : `${base}/`;
+};
+
 const Footer: React.FC = () => {
     return (
         <>
@@ -8,7 +13,7 @@ const Footer: React.FC = () => {
                 <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem' }}>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
-                            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="WI-NET" style={{ height: '32px', filter: 'brightness(1.5)' }} />
+                            <img src={`${getBaseUrl()}logo.png`} alt="WI-NET" style={{ height: '32px', filter: 'brightness(1.5)' }} />
                         </div>
                         <p style={{ color: '#94A3B8', marginBottom: '1rem' }}>
                             WI-NET s.r.o.<br />
@@ -17,7 +22,7 @@ const Footer: React.FC = () => {
                         </p>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', opacity: 0.8 }}>
                             <span style={{ fontSize: '0.8rem', color: '#CBD5E1', fontWeight: 500, letterSpacing: '0.5px' }}>ČLEN SKUPINY</span>
-                            <img src="/logo-swan.png" alt="SWAN" style={{ height: '36px', filter: 'brightness(1.5)' }} />
+                            <img src={`${getBaseUrl()}logo-swan.png`} alt="SWAN" style={{ height: '36px', filter: 'brightness(1.5)' }} />
                         </div>
                         <p style={{ color: '#94A3B8' }}>
                             <strong>Tel:</strong> <a href="tel:0543211880" style={{ color: 'var(--primary)' }}>054 321 18 80</a><br />
@@ -37,10 +42,10 @@ const Footer: React.FC = () => {
                     <div>
                         <h4 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontWeight: 600 }}>Dokumenty</h4>
                         <ul style={{ listStyle: 'none', padding: 0, gap: '0.8rem', display: 'flex', flexDirection: 'column' }}>
-                            <li><a href={`${import.meta.env.BASE_URL}dokumenty/cennik-optika.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník Optika</a></li>
-                            <li><a href={`${import.meta.env.BASE_URL}dokumenty/cennik-wifi.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník Wifi</a></li>
-                            <li><a href={`${import.meta.env.BASE_URL}dokumenty/VZP_WI-NET.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Všeobecné zmluvné podmienky</a></li>
-                            <li><a href={`${import.meta.env.BASE_URL}dokumenty/transparentnost.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Transparentnosť</a></li>
+                            <li><a href={`${getBaseUrl()}dokumenty/cennik-optika.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník Optika</a></li>
+                            <li><a href={`${getBaseUrl()}dokumenty/cennik-wifi.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Cenník Wifi</a></li>
+                            <li><a href={`${getBaseUrl()}dokumenty/VZP_WI-NET.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Všeobecné zmluvné podmienky</a></li>
+                            <li><a href={`${getBaseUrl()}dokumenty/transparentnost.pdf`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Transparentnosť</a></li>
                             <li><a href="http://winet.sk/index.php/tsur/" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Tech. špecifikácia rozhrania</a></li>
                         </ul>
                     </div>

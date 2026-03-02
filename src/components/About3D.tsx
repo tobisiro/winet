@@ -413,8 +413,14 @@ const EXTRUDE_SETTINGS = {
     curveSegments: 24,
 };
 
+// Safe base url resolution (e.g. GitHub Pages "/winet/" vs Vercel "/")
+const getBaseUrl = () => {
+    const base = import.meta.env.BASE_URL || '/';
+    return base.endsWith('/') ? base : `${base}/`;
+};
+
 export default function Hero3D({ isExploreMode = false }: { isExploreMode?: boolean }) {
-    const font = useLoader(FontLoader, `${import.meta.env.BASE_URL}Inter_Bold.json`);
+    const font = useLoader(FontLoader, `${getBaseUrl()}Inter_Bold.json`);
 
     // Generate text shapes and compute perimeter paths for poles
     const { letterShapes, dotShape, polePaths, towerPos, towerHeight } = useMemo(() => {
