@@ -94,7 +94,7 @@ function AdminBuilding({ position, rotation = [0, 0, 0] }: { position: [number, 
                     <meshStandardMaterial color="#E2E8F0" roughness={0.8} />
                 </Box>
                 <Text3D
-                    font={`${import.meta.env.BASE_URL}Inter_Bold.json`}
+                    font="/Inter_Bold.json"
                     size={1.6}
                     height={0.2}
                     curveSegments={12}
@@ -116,7 +116,7 @@ function AdminBuilding({ position, rotation = [0, 0, 0] }: { position: [number, 
                     <meshStandardMaterial color="#E2E8F0" roughness={0.8} />
                 </Box>
                 <Text3D
-                    font={`${import.meta.env.BASE_URL}Inter_Bold.json`}
+                    font="/Inter_Bold.json"
                     size={0.9}
                     height={0.1}
                     curveSegments={12}
@@ -470,33 +470,39 @@ function easeInOutCubic(x: number): number {
     return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }
 
-function CameraController({ isExploreMode, onViewChange }: { isExploreMode: boolean, onViewChange: (vp: number) => void }) {
+function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
     const vLookAt = useMemo(() => new THREE.Vector3(2, 2, 2), []);
-
     const [scrollT, setScrollT] = useState(0);
-    const activeVp = useRef(-1);
+    const [waypoints, setWaypoints] = useState({ s1: 0.28, s2: 0.55, s3: 0.85 });
 
     useEffect(() => {
         const handleScroll = () => {
-            const spacer = document.querySelector('.hero-spacer') as HTMLElement | null;
-            const spacersVisible = spacer ? spacer.offsetHeight > 0 : false;
-            const numScreens = spacersVisible ? 10 : 5;
-            const maxScroll = window.innerHeight * numScreens;
-            if (maxScroll <= 0) {
-                setScrollT(0);
-                return;
-            }
+            const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
             const currentScroll = window.scrollY;
             setScrollT(currentScroll / maxScroll);
         };
 
-        const handleResize = () => {
+        const calculateWaypoints = () => {
+            const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+            const spacers = document.querySelectorAll('.hero-spacer');
+            if (spacers.length >= 3) {
+                const s1 = (spacers[0].getBoundingClientRect().top + window.scrollY) / maxScroll;
+                const s2 = (spacers[1].getBoundingClientRect().top + window.scrollY) / maxScroll;
+                const s3 = (spacers[2].getBoundingClientRect().top + window.scrollY) / maxScroll;
+                setWaypoints({ s1, s2, s3 });
+            }
             handleScroll();
         };
 
+        const handleResize = () => {
+            calculateWaypoints();
+        };
+
+        // Allow DOM layout to complete before capturing precise wrapper pixel offsets
+        setTimeout(calculateWaypoints, 100);
+
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleResize);
-        handleResize(); // Init
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -506,95 +512,83 @@ function CameraController({ isExploreMode, onViewChange }: { isExploreMode: bool
 
     useFrame((state) => {
         const t = Math.max(0, Math.min(1, scrollT));
+        const { s1, s2, s3 } = waypoints;
 
         let targetPos = new THREE.Vector3();
         let targetLookAt = new THREE.Vector3();
 
-        if (t < 0.15) {
-            // VP0: Hero – Admin building
-            let p = t / 0.15;
-            p = easeInOutCubic(p);
-            const p1Pos = new THREE.Vector3(41.6, 11.0, 6.8);
-            const p1Look = new THREE.Vector3(5, 3, 2);
-            const p2Pos = new THREE.Vector3(33.1, 8.6, -9.4);
-            const p2Look = new THREE.Vector3(5, 3, 0);
+        // Viewpoints
+        const p1Pos = new THREE.Vector3(41.6, 11.0, 6.8); // Topdown Admin/Hero
+        const p1Look = new THREE.Vector3(5, 3, 2);
 
-            targetPos.lerpVectors(p1Pos, p2Pos, p);
-            targetLookAt.lerpVectors(p1Look, p2Look, p);
-        } else if (t < 0.45) {
-            // VP1: Fiber intro – pole line (Doubled duration)
-            let p = (t - 0.15) / 0.30;
-            p = easeInOutCubic(p);
-            const p2Pos = new THREE.Vector3(33.1, 8.6, -9.4);
-            const p2Look = new THREE.Vector3(5, 3, 0);
-            const p3Pos = new THREE.Vector3(18.0, 4.2, -17.2);
-            const p3Look = new THREE.Vector3(-5, 3, -8);
+        const p2Pos = new THREE.Vector3(33.1, 8.6, -9.4); // Fiber intro path
+        const p2Look = new THREE.Vector3(5, 3, 0);
 
-            targetPos.lerpVectors(p2Pos, p3Pos, p);
-            targetLookAt.lerpVectors(p2Look, p3Look, p);
-        } else if (t < 0.60) {
-            // VP2: Cable detail close-up
-            let p = (t - 0.45) / 0.15;
-            p = easeInOutCubic(p);
-            const p3Pos = new THREE.Vector3(18.0, 4.2, -17.2);
-            const p3Look = new THREE.Vector3(-5, 3, -8);
-            const p4Pos = new THREE.Vector3(3.3, 1.4, -18.1);
-            const p4Look = new THREE.Vector3(-15, 4, -5);
+        const p3Pos = new THREE.Vector3(18.0, 4.2, -17.2); // Mid path 
+        const p3Look = new THREE.Vector3(-5, 3, -8);
 
-            targetPos.lerpVectors(p3Pos, p4Pos, p);
-            targetLookAt.lerpVectors(p3Look, p4Look, p);
-        } else if (t < 0.75) {
-            // VP3: Transmitter tower
-            let p = (t - 0.60) / 0.15;
-            p = easeInOutCubic(p);
-            const p4Pos = new THREE.Vector3(3.3, 1.4, -18.1);
-            const p4Look = new THREE.Vector3(-15, 4, -5);
-            const p5Pos = new THREE.Vector3(-25.8, 3.0, -15.4);
-            const p5Look = new THREE.Vector3(-18, 5, 12);
+        // Target Spacer 1: "Optická sieť" (stoziar a vedenie v popredi)
+        const p4Pos = new THREE.Vector3(12.0, 7.0, -20.0); // Elevated to look sharply down
+        const p4Look = new THREE.Vector3(8.0, 0.0, -16.0); // Pointing sharply at the ground
 
+        // Target Spacer 2: "Vysielače a prenos" -> Tower is at [-18, -1, 12]
+        const p5Pos = new THREE.Vector3(-35.0, 6.0, 30.0); // Moved further back to see the whole tower
+        const p5Look = new THREE.Vector3(-18, 5, 12);     // Looking midway up the tower
+
+        const p6Pos = new THREE.Vector3(16.1, 8.0, -24.7); // Approaching homes
+        const p6Look = new THREE.Vector3(2, 1, -6);
+
+        // Target Spacer 3: "Dostupnosť všade"
+        const p7Pos = new THREE.Vector3(13.3, 7.2, -19.3);
+        const p7Look = new THREE.Vector3(2, 1.5, -8);
+
+        if (t < s1) {
+            // Journey from Hero to Spacer 1 (Pole close-up)
+            const segT = t / s1;
+            if (segT < 0.33) {
+                let p = easeInOutCubic(segT / 0.33);
+                targetPos.lerpVectors(p1Pos, p2Pos, p);
+                targetLookAt.lerpVectors(p1Look, p2Look, p);
+            } else if (segT < 0.66) {
+                let p = easeInOutCubic((segT - 0.33) / 0.33);
+                targetPos.lerpVectors(p2Pos, p3Pos, p);
+                targetLookAt.lerpVectors(p2Look, p3Look, p);
+            } else {
+                let p = easeInOutCubic((segT - 0.66) / 0.34);
+                targetPos.lerpVectors(p3Pos, p4Pos, p);
+                targetLookAt.lerpVectors(p3Look, p4Look, p);
+            }
+        }
+        else if (t < s2) {
+            // Journey from Spacer 1 (Pole close-up) to Spacer 2 (Transmitter)
+            let p = (Math.max(0, t - s1)) / (s2 - s1);
+            p = Math.min(1, easeInOutCubic(p));
             targetPos.lerpVectors(p4Pos, p5Pos, p);
             targetLookAt.lerpVectors(p4Look, p5Look, p);
-        } else if (t < 0.90) {
-            // VP4: Houses/village
-            let p = (t - 0.75) / 0.15;
-            p = easeInOutCubic(p);
-            const p5Pos = new THREE.Vector3(-25.8, 3.0, -15.4);
-            const p5Look = new THREE.Vector3(-18, 5, 12);
-            const p6Pos = new THREE.Vector3(16.1, 8.0, -24.7);
-            const p6Look = new THREE.Vector3(2, 1, -6);
-
-            targetPos.lerpVectors(p5Pos, p6Pos, p);
-            targetLookAt.lerpVectors(p5Look, p6Look, p);
-        } else {
-            // VP5: Final zoom – house detail
-            let p = Math.min((t - 0.90) / 0.10, 1.0);
-            p = easeInOutCubic(p);
-            const p6Pos = new THREE.Vector3(16.1, 8.0, -24.7);
-            const p6Look = new THREE.Vector3(2, 1, -6);
-            const p7Pos = new THREE.Vector3(13.3, 7.2, -19.3);
-            const p7Look = new THREE.Vector3(2, 1.5, -8);
-
-            targetPos.lerpVectors(p6Pos, p7Pos, p);
-            targetLookAt.lerpVectors(p6Look, p7Look, p);
+        }
+        else if (t < s3) {
+            // Journey from Spacer 2 (Transmitter) to Spacer 3 (Houses)
+            const segT = (Math.max(0, t - s2)) / (s3 - s2);
+            if (segT < 0.5) {
+                let p = easeInOutCubic(segT / 0.5);
+                targetPos.lerpVectors(p5Pos, p6Pos, p);
+                targetLookAt.lerpVectors(p5Look, p6Look, p);
+            } else {
+                let p = easeInOutCubic((segT - 0.5) / 0.5);
+                p = Math.min(1, p);
+                targetPos.lerpVectors(p6Pos, p7Pos, p);
+                targetLookAt.lerpVectors(p6Look, p7Look, p);
+            }
+        }
+        else {
+            // Hold at Houses map
+            targetPos.copy(p7Pos);
+            targetLookAt.copy(p7Look);
         }
 
         if (isExploreMode) return;
 
-        // Determine active viewpoint with gaps (so cards disappear during transitions)
-        let vp = -1;
-        if (t >= 0.0 && t < 0.12) vp = 0;
-        else if (t >= 0.18 && t < 0.42) vp = 1;
-        else if (t >= 0.48 && t < 0.57) vp = 2;
-        else if (t >= 0.63 && t < 0.72) vp = 3;
-        else if (t >= 0.78 && t < 0.87) vp = 4;
-        else if (t >= 0.92 && t <= 1.0) vp = 5;
-
-        if (vp !== activeVp.current) {
-            activeVp.current = vp;
-            onViewChange(vp);
-        }
-
-        // Smoother lerp for cinematic feel (Only when NOT exploring)
+        // Smoother lerp for cinematic feel 
         state.camera.position.lerp(targetPos, 0.08);
         vLookAt.lerp(targetLookAt, 0.08);
         state.camera.lookAt(vLookAt);
@@ -603,12 +597,10 @@ function CameraController({ isExploreMode, onViewChange }: { isExploreMode: bool
     return null;
 }
 
-export default function Hero3D({ isExploreMode = false }: { isExploreMode?: boolean }) {
+export default function Home3D({ isExploreMode = false }: { isExploreMode?: boolean }) {
     // Tower on the bottom left of the screen (negative X, positive Z)
     const towerPos = useMemo(() => new THREE.Vector3(-18, -1, 12), []);
     const towerHeight = 12;
-
-    const [activeVp, setActiveVp] = useState(0);
 
     // Admin building
     const adminBuildingPos = useMemo(() => new THREE.Vector3(12, -1, 6), []); // Moved to mid-left
@@ -806,7 +798,7 @@ export default function Hero3D({ isExploreMode = false }: { isExploreMode?: bool
                     target={[0, 0, 0]}
                 />
             ) : (
-                <CameraController isExploreMode={isExploreMode} onViewChange={() => { }} />
+                <CameraController isExploreMode={isExploreMode} />
             )}
 
             <group>

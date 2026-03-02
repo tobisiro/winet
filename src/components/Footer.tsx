@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
     return (
@@ -27,7 +28,7 @@ const Footer: React.FC = () => {
                     <div>
                         <h4 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: 'var(--text-inverted)' }}>Dokumenty</h4>
                         <ul style={{ listStyle: 'none', padding: 0, gap: '0.8rem', display: 'flex', flexDirection: 'column' }}>
-                            <li><a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>O nás</a></li>
+                            <li><Link to="/o-nas" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>O nás</Link></li>
                             <li><a href="http://winet.sk/kontaktne-informacie/" target="_blank" rel="noreferrer" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Kontaktné informácie</a></li>
                             <li><a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Kariéra</a></li>
                         </ul>

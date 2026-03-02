@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
-import Hero3D from './components/Hero3D';
+import Home3D from './components/Home3D';
 import ServiceCard from './components/ServiceCard';
 import PricingSection from './components/PricingSection';
 import CoverageSection from './components/CoverageSection';
@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import ContactPage from './components/ContactPage';
 import TvPage from './components/TvPage';
 import InternetPage from './components/InternetPage';
+import AboutUs from './components/AboutUs';
 import './App.css';
 
 function Home() {
@@ -56,7 +57,7 @@ function Home() {
       {/* 3D World Scene Fixed in Background */}
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: isExploreMode ? 10 : -1 }}>
         <Canvas shadows camera={{ position: [0, 5, 20], fov: 45 }}>
-          <Hero3D isExploreMode={isExploreMode} />
+          <Home3D isExploreMode={isExploreMode} />
         </Canvas>
       </div>
 
@@ -113,225 +114,57 @@ function Home() {
       }}>
         {/* We place these sections directly in the normal document flow so they push the standard page content down */}
 
-        {/* PAGE 1 (0-1): INITIAL HERO - RIGHT */}
-        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none', position: 'relative' }}>
+        {/* PAGE 1 (0-1): INITIAL HERO - TRANSPARENT OVERLAY */}
+        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 5vw', pointerEvents: 'none', position: 'relative' }}>
           <div className="animate-fade-in hero-card" style={{
             pointerEvents: 'auto',
             width: '100%',
-            maxWidth: '420px',
+            maxWidth: '600px',
             display: 'flex',
             flexDirection: 'column',
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            border: '1px solid rgba(255, 255, 255, 0.5)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.9)',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.9)',
+            alignItems: 'center',
+            textAlign: 'center',
+            background: 'rgba(255, 255, 255, 0.05)', // Highly transparent
+            backdropFilter: 'blur(4px)', // Very subtle blur
+            WebkitBackdropFilter: 'blur(4px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
             borderRadius: '32px',
-            padding: '3rem',
-            boxShadow: '0 30px 60px rgba(0,0,0,0.08)',
+            padding: '2rem 3rem',
+            boxShadow: '0 30px 60px rgba(0,0,0,0.05)',
           }}>
             <div style={{
               display: 'inline-block',
-              alignSelf: 'flex-start',
               padding: '0.4rem 1rem',
-              background: 'rgba(112,72,157,0.15)',
-              color: 'var(--swan)',
+              background: 'rgba(112,72,157,0.1)',
+              color: 'var(--text-primary)',
               borderRadius: '99px',
               fontWeight: 700,
               fontSize: '0.85rem',
-              marginBottom: '1.5rem',
-              border: '1px solid rgba(112,72,157,0.3)',
+              marginBottom: '1rem',
+              border: '1px solid rgba(112,72,157,0.2)',
               textTransform: 'uppercase',
               letterSpacing: '1px'
             }}>
               Prémium Internet Provider
             </div>
-            <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', marginBottom: '1.2rem', letterSpacing: '-1px', color: 'var(--text-primary)', lineHeight: 1.1 }}>
-              Rýchlosť, kvalita a <br /><span className="text-brand-gradient">stabilita.</span>
+            <h1 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', marginBottom: '1rem', letterSpacing: '-0.5px', color: 'var(--text-primary)', lineHeight: 1.1 }}>
+              Rýchlosť, kvalita a <span className="text-brand-gradient">stabilita.</span>
             </h1>
-            <p style={{ fontSize: '1.05rem', color: '#1E293B', marginBottom: '2rem', lineHeight: 1.6, fontWeight: 500 }}>
-              Vaše pripojenie k svetu začína u nás. Ako stabilný lokálny poskytovateľ (ISP) pokrývame viac ako 150 miest a obcí východného Slovenska už viac ako 11 rokov.
+            <p style={{ fontSize: '1rem', color: '#334155', marginBottom: '1.5rem', lineHeight: 1.5, fontWeight: 500 }}>
+              Vaše pripojenie k svetu začína u nás. Pokrývame viac ako 150 miest a obcí.
             </p>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <a href="#cennik" className="btn btn-primary" style={{ boxShadow: '0 10px 20px rgba(255,107,0,0.3)' }}>
-                Zobraziť cenník <ChevronRight size={20} />
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <a href="#cennik" className="btn btn-primary" style={{ boxShadow: '0 10px 20px rgba(255,107,0,0.2)', padding: '0.75rem 1.5rem' }}>
+                Zobraziť cenník <ChevronRight size={18} />
               </a>
             </div>
           </div>
         </section>
 
-        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
-        <section className="hero-spacer" />
 
-        {/* PAGE 3 (2-3): OPTICAL LINES FLIGHT - LEFT */}
-        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div className="hero-card" style={{
-            pointerEvents: 'auto',
-            width: '100%',
-            maxWidth: '430px',
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.5)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.9)',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.9)',
-            borderRadius: '32px',
-            padding: '3rem',
-            boxShadow: '0 30px 60px rgba(0,0,0,0.08)',
-          }}>
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--text-primary)', letterSpacing: '-1px', lineHeight: 1.2 }}>Dáta rýchlosťou svetla</h2>
-            <p style={{ color: '#1E293B', fontSize: '1.05rem', marginBottom: '1.5rem', lineHeight: 1.6, fontWeight: 500 }}>
-              Poskytujeme najmodernejšie FTTH optické pripojenie. Masívne prenosové rýchlosti s nulovým oneskorením zaisťujú, že vaša rodina aj firma môže streamovať v 4K a sťahovať dáta bez obmedzení.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.4)', borderRadius: '16px' }}>
-              <Zap size={24} color="var(--primary)" />
-              <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.95rem' }}>Optické programy priamo do vašej domácnosti</span>
-            </div>
-          </div>
-        </section>
-
-        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
-        <section className="hero-spacer" />
-
-        {/* PAGE 4: CABLE DETAIL CLOSE-UP - RIGHT */}
-        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div className="hero-card" style={{
-            pointerEvents: 'auto',
-            width: '100%',
-            maxWidth: '430px',
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.5)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.9)',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.9)',
-            borderRadius: '32px',
-            padding: '3rem',
-            boxShadow: '0 30px 60px rgba(0,0,0,0.08)',
-          }}>
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--text-primary)', letterSpacing: '-1px', lineHeight: 1.2 }}>Distribučná sieť</h2>
-            <p style={{ color: '#1E293B', fontSize: '1.05rem', marginBottom: '1.5rem', lineHeight: 1.6, fontWeight: 500 }}>
-              Dáta putujú cez stovky kilometrov optických káblov a vedení priamo k vám domov. Každý stĺp a každý spoj je starostlivo udržiavaný, aby ste mali stabilné pripojenie za každého počasia.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.4)', borderRadius: '16px' }}>
-              <Zap size={24} color="var(--primary)" />
-              <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.95rem' }}>Robustná infraštruktúra pre nepretržité spojenie</span>
-            </div>
-          </div>
-        </section>
-
-        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
-        <section className="hero-spacer" />
-
-        {/* PAGE 5: TRANSMITTER TOWER - LEFT */}
-        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div className="hero-card" style={{
-            pointerEvents: 'auto',
-            width: '100%',
-            maxWidth: '430px',
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.5)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.9)',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.9)',
-            borderRadius: '32px',
-            padding: '3rem',
-            boxShadow: '0 30px 60px rgba(0,0,0,0.08)',
-          }}>
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--text-primary)', letterSpacing: '-1px', lineHeight: 1.2 }}>Internet a Televízia</h2>
-            <p style={{ color: '#1E293B', fontSize: '1.05rem', marginBottom: '1.5rem', lineHeight: 1.6, fontWeight: 500 }}>
-              Kde nevedie optika, tam je naše strategické pokrytie WiFi internetu. Výkonné vysielače vo vašom regióne a plnohodnotná internetová televízia pre nekonečnú zábavu doručujú spoľahlivé spojenie aj počas nepriaznivého počasia.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.4)', borderRadius: '16px' }}>
-              <Wifi size={24} color="var(--primary)" />
-              <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.95rem' }}>Spoľahlivé pripojenie kdekoľvek v regióne</span>
-            </div>
-          </div>
-        </section>
-
-        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
-        <section className="hero-spacer" />
-
-        {/* PAGE 6: VILLAGE/HOUSES - RIGHT */}
-        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div className="hero-card" style={{
-            pointerEvents: 'auto',
-            width: '100%',
-            maxWidth: '430px',
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.5)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.9)',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.9)',
-            borderRadius: '32px',
-            padding: '3rem',
-            boxShadow: '0 30px 60px rgba(0,0,0,0.08)',
-          }}>
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--text-primary)', letterSpacing: '-1px', lineHeight: 1.2 }}>Vaša domácnosť pripojená</h2>
-            <p style={{ color: '#1E293B', fontSize: '1.05rem', marginBottom: '1.5rem', lineHeight: 1.6, fontWeight: 500 }}>
-              Či už optika alebo WiFi – Vaša domácnosť je vždy na konci každého nášho kábla a každého lúča nášho vysielača. Internetu pre vás a vašu rodinu venujeme maximálnu starostlivosť.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.4)', borderRadius: '16px' }}>
-              <span style={{ fontSize: '1.8rem' }}>🏠</span>
-              <span style={{ fontWeight: 600, color: '#0F172A', fontSize: '0.95rem' }}>Pripojenie šité na mieru každej domácnosti</span>
-            </div>
-          </div>
-        </section>
-
-        {/* SPACER - 3D SCENE VISIBLE (mobile only) */}
-        <section className="hero-spacer" />
-
-        {/* PAGE 7: LOCAL SUPPORT - LEFT */}
-        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '0 5vw', pointerEvents: 'none' }}>
-          <div className="hero-card" style={{
-            pointerEvents: 'auto',
-            width: '100%',
-            maxWidth: '430px',
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.5)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.9)',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.9)',
-            borderRadius: '32px',
-            padding: '3rem',
-            boxShadow: '0 30px 60px rgba(0,0,0,0.08)',
-          }}>
-            <h2 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--text-primary)', letterSpacing: '-1px', lineHeight: 1.2 }}>Naša lokálna podpora</h2>
-            <p style={{ color: '#1E293B', fontSize: '1.05rem', marginBottom: '1.5rem', lineHeight: 1.6, fontWeight: 500 }}>
-              O sieť sa starajú viacerí skúsení a vyškolení technici, ktorí Vám v prípade potreby vedia vždy pomôcť a poradiť. Internet nie sú len káble, ale aj okamžitá podpora od ľudí z vášho okolia.
-            </p>
-            <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem', padding: '1.5rem', background: 'rgba(255,255,255,0.4)', borderRadius: '16px' }}>
-              <div>
-                <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1 }}>24/7</div>
-                <div style={{ color: '#475569', fontSize: '0.85rem', fontWeight: 600, marginTop: '0.4rem', lineHeight: 1.3 }}>Monitorovacie centrum a podpora klientov</div>
-              </div>
-              <div>
-                <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1 }}>11+</div>
-                <div style={{ color: '#475569', fontSize: '0.85rem', fontWeight: 600, marginTop: '0.4rem', lineHeight: 1.3 }}>Rokov lokálnych skúseností ako ISP</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SPACER - FINAL 3D OVERVIEW (mobile only) */}
-        <section className="hero-spacer" />
 
         {/* PAGE 9+ (8+): STANDARD PAGE CONTENT OVERLAID ON 3D SCENE */}
-        <div style={{ minHeight: '100vh', background: 'var(--bg-surface-light)', pointerEvents: 'auto', position: 'relative', zIndex: 10 }}>
+        <div style={{ minHeight: '100vh', pointerEvents: 'auto', position: 'relative', zIndex: 10 }}>
           {/* Gradient transition from 3D scene to content */}
           <div style={{
             position: 'absolute',
@@ -345,7 +178,7 @@ function Home() {
           }} />
 
           {/* Services Section */}
-          <section id="sluzby" className="section-padding scroll-reveal" style={{ position: 'relative' }}>
+          <section id="sluzby" className="section-padding scroll-reveal" style={{ position: 'relative', background: 'var(--bg-surface-light)' }}>
             <div className="container">
               <div style={{ textAlign: 'center', marginBottom: '4rem', maxWidth: '700px', margin: '0 auto 4rem auto' }}>
                 <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Vyberte si službu podľa vašich predstáv</h2>
@@ -384,6 +217,16 @@ function Home() {
             </div>
           </section>
 
+          {/* Spacer 1: Fiber Optic View */}
+          <section className="hero-spacer" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+            <div className="glass-card" style={{ padding: '1.5rem 2.5rem', borderRadius: '24px', textAlign: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.2rem' }}>
+                <Zap className="text-brand" size={24} />
+                Optická sieť
+              </div>
+            </div>
+          </section>
+
           {/* Prečo my Section */}
           <section id="vyhody" className="section-padding scroll-reveal" style={{ background: 'var(--bg-dark)' }}>
             <div className="container">
@@ -417,8 +260,28 @@ function Home() {
             </div>
           </section>
 
+          {/* Spacer 2: Transmitter View */}
+          <section className="hero-spacer" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+            <div className="glass-card" style={{ padding: '1.5rem 2.5rem', borderRadius: '24px', textAlign: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.2rem' }}>
+                <Wifi className="text-brand" size={24} />
+                Vysielače a prenos
+              </div>
+            </div>
+          </section>
+
           <CoverageSection />
           <PricingSection />
+
+          {/* Spacer 3: Coverage/House View */}
+          <section className="hero-spacer" style={{ minHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+            <div className="glass-card" style={{ padding: '1.5rem 2.5rem', borderRadius: '24px', textAlign: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.2rem' }}>
+                <MapPin className="text-brand" size={24} />
+                Dostupnosť všade
+              </div>
+            </div>
+          </section>
 
           <Footer />
 
@@ -446,6 +309,7 @@ function App() {
         <Route path="/internet" element={<InternetPage />} />
         <Route path="/kontakt" element={<ContactPage />} />
         <Route path="/televizia" element={<TvPage />} />
+        <Route path="/o-nas" element={<AboutUs />} />
       </Routes>
     </Router>
   );
