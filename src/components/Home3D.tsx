@@ -533,8 +533,8 @@ function CameraController({ isExploreMode }: { isExploreMode: boolean }) {
         const p3Look = new THREE.Vector3(-5, 3, -8);
 
         // Target Spacer 1: "Optická sieť" (stoziar a vedenie v popredi)
-        const p4Pos = new THREE.Vector3(12.0, 7.0, -20.0); // Elevated to look sharply down
-        const p4Look = new THREE.Vector3(8.0, 0.0, -16.0); // Pointing sharply at the ground
+        const p4Pos = new THREE.Vector3(12.0, 5.0, -21.0); // Lowered to look more forward
+        const p4Look = new THREE.Vector3(8.0, 2.5, -15.0); // Pointing forward at the poles and wires
 
         // Target Spacer 2: "Vysielače a prenos" -> Tower is at [-18, -1, 12]
         const p5Pos = new THREE.Vector3(-35.0, 6.0, 30.0); // Moved further back to see the whole tower
