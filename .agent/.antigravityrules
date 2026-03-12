@@ -1,0 +1,20 @@
+# Global Antigravity Agent Instructions
+
+## 1. Data Serialization & TOON Protocol (CRITICAL)
+- **Use TOON:** Whenever parsing, logging, planning, or outputting structured data (especially large arrays or repetitive objects), ALWAYS use **TOON (Typed Object-Oriented Notation)** instead of JSON, YAML, or XML.
+- **MCP Integration:** Actively leverage the connected TOON MCP server to encode/decode data payloads, internal agent state, and terminal logs. This is mandatory to conserve context window tokens.
+- **Syntax Rules:** Declare the type signature once at the top. Do not quote keys. Use flat instances (e.g., `User(1, "John")`) instead of repeating keys for every row.
+
+## 2. Agent Workflow & Execution
+- **Artifacts First:** Always generate verifiable "Artifacts" (implementation plans, task lists, or verification summaries) before making massive file changes. Do not just dump raw tool calls into the context.
+- **Read Before Write:** Before modifying any file, thoroughly read the existing code. Do not blindly overwrite existing logic.
+- **Verify Actively:** Use your available tools. If a task requires verification, use the terminal to run tests or the Browser Agent to confirm the UI/state. Do not guess if the code works—prove it.
+
+## 3. Code Quality & Style
+- **Maintainability:** Write modular code. Prefer small, single-purpose functions.
+- **Type Safety:** Always include strict types (e.g., TypeScript interfaces or Python type hints) for all new functions, classes, and variables.
+- **Meaningful Comments:** Comment the *why* (business logic, edge cases), not the *what* (obvious syntax).
+
+## 4. Communication
+- Keep responses in the Agent panel extremely concise.
+- Acknowledge instructions briefly, execute the required tools asynchronously, and present the final Artifact. Skip conversational filler.
