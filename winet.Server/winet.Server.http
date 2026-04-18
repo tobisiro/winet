@@ -1,0 +1,6 @@
+@winet.Server_HostAddress = http://localhost:5106
+
+GET {{winet.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

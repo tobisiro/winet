@@ -1,0 +1,2 @@
+footer a { transition: color 0.2s; }
+footer a:hover { color: var(--swan) !important; }

@@ -1,0 +1,4 @@
+@media (min-width: 768px) {
+  .desktop-menu { display: block !important; }
+  .mobile-toggle { display: none !important; }
+}

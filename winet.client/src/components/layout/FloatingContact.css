@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+  .floating-contact {
+    padding: 0 !important;
+    width: 52px !important;
+    height: 52px !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+  .floating-contact-text {
+    display: none !important;
+  }
+}

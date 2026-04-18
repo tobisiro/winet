@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="winet.client/winet.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="winet.Server/winet.Server.csproj" />
+</Solution>

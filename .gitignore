@@ -38,3 +38,11 @@ coverage/
 *.njsproj
 *.sln
 *.sw?
+
+# Visual Studio / .NET setup
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+[Bb]in/
+[Oo]bj/
