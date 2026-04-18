@@ -23,8 +23,7 @@ const EXTRUDE_SETTINGS = {
 };
 
 const getBaseUrl = () => {
-    // Vite base is usually /
-    return '/';
+    return import.meta.env.BASE_URL;
 };
 
 export function About3D({ isExploreMode = false }: { isExploreMode?: boolean }) {

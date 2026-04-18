@@ -1,7 +1,7 @@
 import { Box, Cylinder, Text3D } from '@react-three/drei';
 
 const getBaseUrl = () => {
-    return '/';
+    return import.meta.env.BASE_URL;
 };
 
 export function AdminBuilding({ position, rotation = [0, 0, 0] }: { position: [number, number, number], rotation?: [number, number, number] }) {
