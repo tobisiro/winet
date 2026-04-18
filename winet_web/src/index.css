@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --primary: #FF6B00;
+  --primary-hover: #E66000;
+  --swan: #70489d;
+  --swan-hover: #5A397E;
+  --bg-dark: #FFFFFF;
+  --bg-surface: #F8FAFC;
+  --bg-surface-light: #F1F5F9;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-inverted: #FFFFFF;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border: none;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Container */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Utilities */
+.text-gradient {
+  background: linear-gradient(135deg, #0F172A 0%, #334155 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-primary-gradient {
+  background: linear-gradient(135deg, #FF6B00 0%, #FFA800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-brand-gradient {
+  background: linear-gradient(135deg, var(--swan) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-padding {
+  padding: 6rem 0;
+}
+
+/* Hero spacers: hidden on desktop, visible on mobile */
+.hero-spacer {
+  display: none;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .hero-spacer {
+    display: block;
+    height: 100vh;
+  }
+
+
+  .hero-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 1.5rem !important;
+    border-radius: 24px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .pricing-card {
+    transform: scale(1) !important;
+    padding: 1.5rem !important;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .coverage-grid {
+    grid-template-columns: 1fr !important;
+    padding: 1.5rem !important;
+  }
+
+  .coverage-section {
+    padding: 4rem 1rem !important;
+  }
+
+  .coverage-map-container {
+    padding: 0.5rem !important;
+    border-radius: 16px !important;
+  }
+
+  .section-padding {
+    padding: 3rem 0;
+  }
+}
+
+/* Scroll-triggered reveal animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.8, 0.25, 1),
+    transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scroll indicator bounce */
+@keyframes bounceDown {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(12px);
+    opacity: 1;
+  }
+}
+
+.scroll-indicator {
+  animation: bounceDown 2s ease-in-out infinite;
+}
+
+/* SledovanieTV Plugin CSS Overrides / Resets */
+/* Prevent our global app styles from breaking the third-party plugin layout */
+#m-plugin .btn {
+  display: flex !important;
+  /* Changed from inline-block */
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: normal !important;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  gap: 0;
+  font-family: inherit;
+  width: 100% !important;
+  /* Force button to respect container width */
+  max-width: 100%;
+  height: auto;
+  min-height: 40px;
+  /* Ensure minimum touch target size and prevent squishing vertically */
+  box-sizing: border-box;
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  word-wrap: break-word;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Override the internal flex container of the SledovanieTV add-on package cards to allow vertical stacking if needed */
+#m-plugin .flex-wrap {
+  flex-direction: column !important;
+  gap: 1rem !important;
+  align-items: stretch !important;
+}
+
+#m-plugin .flex-1.flex.flex-col {
+  justify-content: space-between !important;
+}
+
+/* Ensure the wrapper of the button doesn't force a tiny width */
+#m-plugin [class*="w-"] {
+  max-width: 100% !important;
+}
+
+#m-plugin .btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+#m-plugin .btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+#m-plugin .btn-primary {
+  color: #fff;
+  background-color: var(--primary);
+  /* Keep it slightly themed but normal shape */
+  border-color: var(--primary-hover);
+  box-shadow: none;
+}
+
+#m-plugin .btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  box-shadow: none;
+}
+
+#m-plugin .btn:hover {
+  transform: none;
+  box-shadow: none;
+}
