@@ -1,122 +1,166 @@
 import React from 'react';
+import styled from 'styled-components';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { MapPin, Phone, Building2, Clock } from 'lucide-react';
 import MapEmbed from './MapEmbed';
 
+const PageContainer = styled.div`
+  background: var(--bg-surface-light);
+  min-height: 100vh;
+  color: var(--text-primary);
+`;
+
+const ContentWrapper = styled.div`
+  padding-top: 8rem;
+  padding-bottom: 4rem;
+  padding-left: 5vw;
+  padding-right: 5vw;
+`;
+
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+const Header = styled.div`
+  text-align: center;
+  margin-bottom: 4rem;
+`;
+
+const Title = styled.h1`
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+`;
+
+const Subtitle = styled.p`
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+`;
+
+const ContactCard = styled.div<{ $noPadding?: boolean }>`
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  border-radius: 24px;
+  padding: ${props => props.$noPadding ? '0' : '2.5rem'};
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow: hidden;
+`;
+
+const CardTitle = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+`;
+
+const Label = styled.p`
+  color: var(--text-secondary);
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+`;
+
+const InfoText = styled.p<{ $bold?: boolean; $large?: boolean }>`
+  font-size: ${props => props.$large ? '1.2rem' : '1rem'};
+  font-weight: ${props => props.$bold ? '600' : '400'};
+  margin-bottom: 0.4rem;
+`;
+
+const FooterBox = styled.div`
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
+`;
+
 const ContactPage: React.FC = () => {
     return (
-        <div style={{ background: 'var(--bg-surface-light)', minHeight: '100vh', color: 'var(--text-primary)' }}>
+        <PageContainer>
             <Navbar />
-            <div style={{ paddingTop: '8rem', paddingBottom: '4rem', paddingLeft: '5vw', paddingRight: '5vw' }}>
-                <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-
-                    {/* Header */}
-                    <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                        <h1 style={{
-                            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-                            fontWeight: 800,
-                            letterSpacing: '-2px',
-                            color: 'var(--text-primary)',
-                            marginBottom: '1rem'
-                        }}>Kontaktujte nás</h1>
-                        <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
+            <ContentWrapper>
+                <Container>
+                    <Header>
+                        <Title>Kontaktujte nás</Title>
+                        <Subtitle>
                             Sme tu pre Vás. Či už hľadáte spoľahlivý internet, potrebujete pomoc, alebo sa chcete na niečo opýtať.
-                        </p>
-                    </div>
+                        </Subtitle>
+                    </Header>
 
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                        gap: '2rem'
-                    }}>
+                    <Grid>
                         {/* Box 1: Kontaktné údaje */}
-                        <div style={{
-                            background: '#FFFFFF',
-                            border: '1px solid rgba(0,0,0,0.05)',
-                            boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-                            borderRadius: '24px',
-                            padding: '2.5rem',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '1.5rem'
-                        }}>
-                            <h3 style={{ fontSize: '1.5rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-                                <Phone size={24} color="#0ea5e9" /> Spojte sa s nami
-                            </h3>
+                        <ContactCard>
+                            <CardTitle>
+                                <Phone size={24} color="var(--primary)" /> Spojte sa s nami
+                            </CardTitle>
                             <div>
-                                <p style={{ color: 'var(--text-secondary)', marginBottom: '0.2rem', fontSize: '0.9rem' }}>Telefón</p>
-                                <p style={{ fontSize: '1.2rem', fontWeight: 600 }}>054 / 321 18 80</p>
-                                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Zo zahraničia: +421 54 321 18 80</p>
+                                <Label>Telefón</Label>
+                                <InfoText $large $bold>054 / 321 18 80</InfoText>
+                                <InfoText style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Zo zahraničia: +421 54 321 18 80</InfoText>
                             </div>
                             <div>
-                                <p style={{ color: 'var(--text-secondary)', marginBottom: '0.2rem', fontSize: '0.9rem' }}>Emailové oddelenia</p>
-                                <p style={{ fontSize: '1rem', marginBottom: '0.4rem' }}><strong>Všeobecné:</strong> internet@winet.sk</p>
-                                <p style={{ fontSize: '1rem', marginBottom: '0.4rem' }}><strong>Technické:</strong> technicke@winet.sk</p>
-                                <p style={{ fontSize: '1rem', marginBottom: '0.4rem' }}><strong>Ekonomické:</strong> ekonomicke@winet.sk</p>
-                                <p style={{ fontSize: '1rem' }}><strong>Reklamácie:</strong> reklamacie@wi-net.sk</p>
+                                <Label>Emailové oddelenia</Label>
+                                <InfoText><strong>Všeobecné:</strong> internet@winet.sk</InfoText>
+                                <InfoText><strong>Technické:</strong> technicke@winet.sk</InfoText>
+                                <InfoText><strong>Ekonomické:</strong> ekonomicke@winet.sk</InfoText>
+                                <InfoText style={{ marginBottom: 0 }}><strong>Reklamácie:</strong> reklamacie@wi-net.sk</InfoText>
                             </div>
-                            <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
-                                <p style={{ color: 'var(--text-secondary)', marginBottom: '0.2rem', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <FooterBox>
+                                <Label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <Clock size={16} /> Zákaznícka linka a SMS podpora
-                                </p>
-                                <p style={{ marginBottom: '0.5rem' }}>Po - Pia: 8:00 - 16:00</p>
-                                <p style={{ fontSize: '0.95rem' }}><strong>SMS na poruchy (mimo prac. hodín):</strong><br /> 0948 409 609</p>
-                            </div>
-                        </div>
+                                </Label>
+                                <InfoText style={{ marginBottom: '0.5rem' }}>Po - Pia: 8:00 - 16:00</InfoText>
+                                <InfoText style={{ fontSize: '0.95rem', marginBottom: 0 }}><strong>SMS na poruchy (mimo prac. hodín):</strong><br /> 0948 409 609</InfoText>
+                            </FooterBox>
+                        </ContactCard>
 
                         {/* Box 2: Firemné údaje */}
-                        <div style={{
-                            background: '#FFFFFF',
-                            border: '1px solid rgba(0,0,0,0.05)',
-                            boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-                            borderRadius: '24px',
-                            padding: '2.5rem',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '1.5rem'
-                        }}>
-                            <h3 style={{ fontSize: '1.5rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-                                <Building2 size={24} color="#f97316" /> Fakturačné údaje
-                            </h3>
+                        <ContactCard>
+                            <CardTitle>
+                                <Building2 size={24} color="var(--primary)" /> Fakturačné údaje
+                            </CardTitle>
                             <div>
-                                <p style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.5rem' }}>WI-NET s.r.o.</p>
-                                <p style={{ color: 'var(--text-secondary)' }}>Hlavná 8/18</p>
-                                <p style={{ color: 'var(--text-secondary)' }}>086 41 Raslavice</p>
+                                <InfoText $large $bold style={{ marginBottom: '0.5rem' }}>WI-NET s.r.o.</InfoText>
+                                <InfoText style={{ color: 'var(--text-secondary)' }}>Hlavná 8/18</InfoText>
+                                <InfoText style={{ color: 'var(--text-secondary)' }}>086 41 Raslavice</InfoText>
                             </div>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '0.5rem' }}>
                                 <div>
-                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '0.2rem' }}>IČO</p>
-                                    <p>46 047 881</p>
+                                    <Label>IČO</Label>
+                                    <InfoText style={{ marginBottom: 0 }}>46 047 881</InfoText>
                                 </div>
                                 <div>
-                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '0.2rem' }}>DIČ</p>
-                                    <p>2023223062</p>
+                                    <Label>DIČ</Label>
+                                    <InfoText style={{ marginBottom: 0 }}>2023223062</InfoText>
                                 </div>
                                 <div style={{ gridColumn: '1 / -1' }}>
-                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '0.2rem' }}>IČ DPH</p>
-                                    <p>SK2023223062</p>
+                                    <Label>IČ DPH</Label>
+                                    <InfoText style={{ marginBottom: 0 }}>SK2023223062</InfoText>
                                 </div>
                             </div>
-                        </div>
+                        </ContactCard>
 
                         {/* Box 3: Mapa / Adresa */}
-                        <div style={{
-                            background: '#FFFFFF',
-                            border: '1px solid rgba(0,0,0,0.05)',
-                            boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
-                            borderRadius: '24px',
-                            overflow: 'hidden',
-                            display: 'flex',
-                            flexDirection: 'column'
-                        }}>
+                        <ContactCard $noPadding>
                             <div style={{ padding: '2.5rem' }}>
-                                <h3 style={{ fontSize: '1.5rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '0.5rem' }}>
-                                    <MapPin size={24} color="#10b981" /> Nájdete nás tu
-                                </h3>
+                                <CardTitle style={{ marginBottom: '0.5rem' }}>
+                                    <MapPin size={24} color="var(--primary)" /> Nájdete nás tu
+                                </CardTitle>
                                 <p style={{ color: 'var(--text-secondary)' }}>Sme stabilným operátorom pre východné Slovensko so sídlom v Raslaviciach.</p>
                             </div>
-                            {/* Map component with Cookie Consent Placeholder */}
                             <div style={{ flex: 1, position: 'relative', minHeight: '350px' }}>
                                 <MapEmbed
                                     title="Mapa Winet Kontakt"
@@ -124,13 +168,12 @@ const ContactPage: React.FC = () => {
                                     height="100%"
                                 />
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+                        </ContactCard>
+                    </Grid>
+                </Container>
+            </ContentWrapper>
             <Footer />
-        </div>
+        </PageContainer>
     );
 };
 

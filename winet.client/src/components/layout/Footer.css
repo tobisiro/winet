@@ -1,2 +1,2 @@
 footer a { transition: color 0.2s; }
-footer a:hover { color: var(--swan) !important; }
+footer a:hover { color: var(--primary) !important; }

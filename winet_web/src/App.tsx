@@ -101,7 +101,7 @@ function Home() {
             fontFamily: 'var(--font-heading)'
           }}
         >
-          {isExploreMode ? <><X size={20} /> Návrat do Príbehu</> : <><Orbit size={20} /> Preskúmať 3D Svet</>}
+          {isExploreMode ? <><X size={20} /> Späť</> : <><Orbit size={20} /> Preskúmať</>}
         </button>
       </div>
 
@@ -243,7 +243,7 @@ function Home() {
                 </div>
 
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ width: '80px', height: '80px', margin: '0 auto 1.5rem auto', background: 'rgba(112, 72, 157, 0.1)', borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--swan)' }}>
+                  <div style={{ width: '80px', height: '80px', margin: '0 auto 1.5rem auto', background: 'rgba(255, 107, 0, 0.1)', borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
                     <ShieldCheck size={40} />
                   </div>
                   <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Kvalitné pripojenie</h3>

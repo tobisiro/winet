@@ -1,0 +1,8 @@
+{
+  "sdk": {
+    "version": "10.0.202"
+  },
+  "msbuild-sdks": {
+    "Microsoft.VisualStudio.JavaScript.Sdk": "1.0.5277448"
+  }
+}
