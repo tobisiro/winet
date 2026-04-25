@@ -472,7 +472,9 @@ const ContactPage: React.FC = () => {
 
                                 {/* ALTCHA */}
                                 <div className="form-group" style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '1rem', marginBottom: '1rem' }}>
-                                    <altcha-widget challenge="/api/altcha/challenge"></altcha-widget>
+                                    {React.createElement('altcha-widget', { 
+                                        challenge: '/api/altcha/challenge' 
+                                    } as React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & { challenge: string }, HTMLElement>)}
                                 </div>
 
                                 {/* Submit */}
