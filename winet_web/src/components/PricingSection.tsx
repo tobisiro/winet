@@ -1,5 +1,144 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import PricingCard from './PricingCard';
+
+const Section = styled.section`
+    background: var(--bg-dark);
+    position: relative;
+    padding: 6rem 0;
+`;
+
+const Header = styled.div`
+    text-align: center;
+    margin-bottom: 4rem;
+`;
+
+const Title = styled.h2`
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+`;
+
+const Subtitle = styled.p`
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+`;
+
+const ControlsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 4rem;
+`;
+
+const TechToggleContainer = styled.div`
+    display: inline-flex;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 0.4rem;
+    border-radius: 99px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+`;
+
+const TechButton = styled.button<{ $active: boolean }>`
+    padding: 0.8rem 2rem;
+    border-radius: 99px;
+    background: ${props => props.$active ? 'var(--primary)' : 'transparent'};
+    color: ${props => props.$active ? 'white' : 'var(--text-secondary)'};
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+
+    @media (max-width: 480px) {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+`;
+
+const SwitchContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-primary);
+    flex-wrap: nowrap;
+`;
+
+const SwitchLabel = styled.span<{ $active: boolean }>`
+    opacity: ${props => props.$active ? 1 : 0.5};
+    font-weight: 500;
+    white-space: nowrap;
+    font-size: 0.95rem;
+
+    @media (max-width: 480px) {
+        font-size: 0.85rem;
+    }
+`;
+
+const ToggleButton = styled.button<{ $withViazanost: boolean }>`
+    width: 60px;
+    height: 32px;
+    background: ${props => props.$withViazanost ? 'var(--primary)' : '#94A3B8'};
+    border-radius: 32px;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+    flex-shrink: 0;
+`;
+
+const ToggleCircle = styled.div<{ $withViazanost: boolean }>`
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: ${props => props.$withViazanost ? '32px' : '4px'};
+    transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+`;
+
+const Grid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+`;
+
+const FooterContainer = styled.div`
+    text-align: center;
+    margin-top: 3rem;
+`;
+
+const FooterNote = styled.p`
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+`;
+
+const FooterLinks = styled.div`
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+`;
+
+const FooterLink = styled.a`
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+
+    &:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
+`;
 
 const OPTIKA_PLANS = [
     {
@@ -100,97 +239,44 @@ const PricingSection: React.FC<{ defaultTab?: 'optika' | 'wifi' }> = ({ defaultT
     const currentPlans = activeTab === 'optika' ? OPTIKA_PLANS : WIFI_PLANS;
 
     return (
-        <section id="cennik" className="section-padding" style={{ background: 'var(--bg-dark)', position: 'relative' }}>
+        <Section id="cennik">
             <div className="container">
-                <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                    <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', marginBottom: '1rem', color: 'var(--text-primary)' }}>Nekompromisné domáce pripojenie</h2>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
+                <Header>
+                    <Title>Nekompromisné domáce pripojenie</Title>
+                    <Subtitle>
                         Vyberte si spomedzi našich najvýhodnejších balíkov. Či už je to stabilná optika alebo flexibilná wifi technológia.
-                    </p>
-                </div>
+                    </Subtitle>
+                </Header>
 
-                {/* Controls */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', marginBottom: '4rem' }}>
-
-                    {/* Tech Toggle */}
-                    <div style={{
-                        display: 'inline-flex',
-                        background: 'rgba(255,255,255,0.05)',
-                        padding: '0.4rem',
-                        borderRadius: '99px',
-                        border: '1px solid rgba(255,255,255,0.1)'
-                    }}>
-                        <button
+                <ControlsContainer>
+                    <TechToggleContainer>
+                        <TechButton 
+                            $active={activeTab === 'optika'} 
                             onClick={() => setActiveTab('optika')}
-                            style={{
-                                padding: '0.8rem 2rem',
-                                borderRadius: '99px',
-                                background: activeTab === 'optika' ? 'var(--primary)' : 'transparent',
-                                color: activeTab === 'optika' ? 'white' : 'var(--text-secondary)',
-                                fontWeight: 600,
-                                border: 'none',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease'
-                            }}
                         >
                             Optický internet
-                        </button>
-                        <button
+                        </TechButton>
+                        <TechButton 
+                            $active={activeTab === 'wifi'} 
                             onClick={() => setActiveTab('wifi')}
-                            style={{
-                                padding: '0.8rem 2rem',
-                                borderRadius: '99px',
-                                background: activeTab === 'wifi' ? 'var(--primary)' : 'transparent',
-                                color: activeTab === 'wifi' ? 'white' : 'var(--text-secondary)',
-                                fontWeight: 600,
-                                border: 'none',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease'
-                            }}
                         >
                             Wifi internet
-                        </button>
-                    </div>
+                        </TechButton>
+                    </TechToggleContainer>
 
-                    {/* Viazanost Switch */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-primary)' }}>
-                        <span style={{ opacity: withViazanost ? 0.5 : 1, fontWeight: 500 }}>Bez viazanosti</span>
-                        <button
+                    <SwitchContainer>
+                        <SwitchLabel $active={!withViazanost}>Bez viazanosti</SwitchLabel>
+                        <ToggleButton 
+                            $withViazanost={withViazanost} 
                             onClick={() => setWithViazanost(!withViazanost)}
-                            style={{
-                                width: '60px',
-                                height: '32px',
-                                background: withViazanost ? 'var(--primary)' : '#94A3B8', // Changed to visible slate color
-                                borderRadius: '32px',
-                                border: 'none',
-                                position: 'relative',
-                                cursor: 'pointer',
-                                transition: 'background 0.3s'
-                            }}
                         >
-                            <div style={{
-                                width: '24px',
-                                height: '24px',
-                                background: 'white',
-                                borderRadius: '50%',
-                                position: 'absolute',
-                                top: '4px',
-                                left: withViazanost ? '32px' : '4px',
-                                transition: 'left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-                            }} />
-                        </button>
-                        <span style={{ opacity: withViazanost ? 1 : 0.5, fontWeight: 500 }}>Viazanosť 24 mesiacov</span>
-                    </div>
-                </div>
+                            <ToggleCircle $withViazanost={withViazanost} />
+                        </ToggleButton>
+                        <SwitchLabel $active={withViazanost}>Viazanosť 24 mesiacov</SwitchLabel>
+                    </SwitchContainer>
+                </ControlsContainer>
 
-                {/* Cards Grid */}
-                <div className="pricing-grid" style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                    gap: '2rem',
-                    maxWidth: '1200px',
-                    margin: '0 auto'
-                }}>
+                <Grid className="pricing-grid">
                     {currentPlans.map((plan, index) => (
                         <PricingCard
                             key={`${activeTab}-${index}`}
@@ -199,17 +285,21 @@ const PricingSection: React.FC<{ defaultTab?: 'optika' | 'wifi' }> = ({ defaultT
                             withViazanost={withViazanost}
                         />
                     ))}
-                </div>
+                </Grid>
 
-                <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Všetky uvedené ceny sú vrátane DPH.</p>
-                    <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                        <a href="http://winet.sk/upload/dokumenty/cennik-optika.pdf" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 500 }}>Stiahnuť cenník Optika (PDF)</a>
-                        <a href="http://winet.sk/upload/dokumenty/cennik-wifi.pdf" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 500 }}>Stiahnuť cenník Wifi (PDF)</a>
-                    </div>
-                </div>
+                <FooterContainer>
+                    <FooterNote>Všetky uvedené ceny sú vrátane DPH.</FooterNote>
+                    <FooterLinks>
+                        <FooterLink href="http://winet.sk/upload/dokumenty/cennik-optika.pdf" target="_blank" rel="noreferrer">
+                            Stiahnuť cenník Optika (PDF)
+                        </FooterLink>
+                        <FooterLink href="http://winet.sk/upload/dokumenty/cennik-wifi.pdf" target="_blank" rel="noreferrer">
+                            Stiahnuť cenník Wifi (PDF)
+                        </FooterLink>
+                    </FooterLinks>
+                </FooterContainer>
             </div>
-        </section>
+        </Section>
     );
 };
 

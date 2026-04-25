@@ -59,6 +59,7 @@ const MapEmbed: React.FC<MapEmbedProps> = ({ src, title, height = '480px' }) => 
                 style={{ border: 0, position: 'absolute', top: 0, left: 0 }}
                 allowFullScreen
                 loading="lazy"
+                title-attr={title}
                 referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
         </div>
