@@ -12,13 +12,23 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.MapStaticAssets();
 
+// Health check endpoint for container verification
+app.MapGet("/health", () => "Server is running!");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
-app.UseHttpsRedirection();
+else 
+{
+    // Only use HTTPS redirection if NOT running in Docker
+    // In Docker, SSL termination is typically handled by a reverse proxy
+    if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") != "true")
+    {
+        app.UseHttpsRedirection();
+    }
+}
 
 app.UseAuthorization();
 
